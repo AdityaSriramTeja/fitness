@@ -31,3 +31,10 @@ body {
     text-wrap: balance;
   }
 }
+
+
+@layer components {
+  .input {
+    @apply bg-transparent border-2 rounded-lg px-2 focus:outline-none;
+  }
+}
