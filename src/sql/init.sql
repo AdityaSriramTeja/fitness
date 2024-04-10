@@ -10,7 +10,7 @@ CREATE TABLE Trainer(
   name TEXT NOT NULL
 );
 
-CREATE TABLE Trainer_Availablity(
+CREATE TABLE Trainer_Availability(
   id SERIAL PRIMARY KEY,
   day TEXT NOT NULL,
   starting_time TIME NOT NULL, -- All classes are implicitly expected to have a duration of exactly 1 hour

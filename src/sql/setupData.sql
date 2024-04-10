@@ -7,7 +7,7 @@ INSERT INTO Trainer (username, password, name) VALUES
   ('trainer2', 'trainer2', 'NinjaTrainer2'),
   ('trainer3', 'trainer3', 'NinjaTrainer3');
 
-INSERT INTO Trainer_Availablity (day, starting_time, trainer_username) VALUES
+INSERT INTO Trainer_Availability (day, starting_time, trainer_username) VALUES
   ('Monday', '09:00:00', 'trainer1'),
   ('Tuesday', '10:00:00', 'trainer1'),
   ('Wednesday', '11:00:00', 'trainer1'),
