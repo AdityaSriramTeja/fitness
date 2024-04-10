@@ -7,24 +7,28 @@ INSERT INTO Trainer (username, password, name) VALUES
   ('trainer2', 'trainer2', 'NinjaTrainer2'),
   ('trainer3', 'trainer3', 'NinjaTrainer3');
 
+INSERT INTO Trainer_Availablity (date, starting_time, ending_time) VALUES
+  ('Monday', '09:00:00', 'trainer_1'),
+  ('Tuesday', '10:00:00', 'trainer_1'),
+  ('Wednesday', '11:00:00', 'trainer_1'),
+  ('Monday', '12:00:00', 'trainer_2'),
+  ('Tuesday', '13:00:00', 'trainer_2'),
+  ('Wednesday', '14:00:00', 'trainer_2'),
+  ('Monday', '15:00:00', 'trainer_3'),
+  ('Tuesday', '16:00:00', 'trainer_3'),
+  ('Wednesday', '17:00:00', 'trainer_3');
+
 INSERT INTO Room (name) VALUES
   ('Room 1'),
   ('Room 2'),
   ('Room 3');
 
-INSERT INTO Schedule_Slot (date, starting_time, ending_time) VALUES
-  ('2021-01-01', '08:00:00', '09:00:00'),
-  ('2021-01-01', '09:00:00', '10:00:00'),
-  ('2021-01-01', '10:00:00', '11:00:00'),
-  ('2021-01-01', '11:00:00', '12:00:00'),
-  ('2021-01-01', '12:00:00', '13:00:00');
-
-INSERT INTO Class (name, is_group_class, room_id, schedule_slot_id, trainer_username) VALUES
-  ('Class 1', TRUE, 1, 1, 'trainer1'),
-  ('Class 2', TRUE, 2, 2, 'trainer2'),
-  ('Class 3', TRUE, 3, 3, 'trainer3'),
-  ('Class 4', TRUE, 1, 4, 'trainer1'),
-  ('Class 5', FALSE, 2, 5, 'trainer2');
+INSERT INTO Class (name, is_group_class, room_id, day, starting_time, trainer_username) VALUES
+  ('Class 1', TRUE, 1, 'Monday', '09:00:00', 'trainer1'),
+  ('Class 2', TRUE, 2, 'Monday', '12:00:00', 'trainer2'),
+  ('Class 3', TRUE, 3, 'Monday', '15:00:00', 'trainer3'),
+  ('Class 4', TRUE, 1, 'Monday', '10:00:00', 'trainer1'),
+  ('Class 5', FALSE, 2, 'Monday', '13:00:00', 'trainer2');
 
 INSERT INTO Member (username, password, name, outstanding_balance, enrolled_class_id) VALUES
   ('member1', 'member1', 'Bob1', 0, 1),
