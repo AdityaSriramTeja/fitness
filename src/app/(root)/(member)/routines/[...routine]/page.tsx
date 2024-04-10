@@ -1,4 +1,4 @@
-import { RoutineDetailChips } from "@/components/shared/routine/routine-detail-chips";
+import { DetailChips } from "@/components/shared/detailChips";
 import React from "react";
 
 const RouteDetails = () => {
@@ -9,9 +9,10 @@ const RouteDetails = () => {
         +{" "}
       </button>
       <section className="  flex flex-col gap-y-5  ">
-        <h1 className="text-lg font-bold"> Exercise name </h1>
+        <h1 className="text-lg font-bold"> Push ups </h1>
         <p className="opacity-[80%]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+          5 sets of 10 push ups each
+          {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
           consequat commodo lorem. Aenean non molestie urna. Morbi lacinia
           congue dui, sodales interdum metus accumsan eget. Nullam venenatis
           erat quis nulla cursus, vel aliquam purus fermentum. Mauris sit amet
@@ -46,12 +47,13 @@ const RouteDetails = () => {
           malesuada sapien sit amet accumsan viverra. Aliquam tincidunt libero
           tortor, non tincidunt velit interdum non. Donec aliquet luctus porta.
           Etiam at bibendum tellus, et condimentum arcu. Ut sed diam sed mi
-          iaculis congue in at magna. Nunc venenatis posuere justo ac vehicula.{" "}
+          iaculis congue in at magna. Nunc venenatis posuere justo ac vehicula.{" "} */}
         </p>
 
-        <div className="flex gap-x-5">
+        <div className="flex gap-x-5 w-full flex-wrap">
           Tags:
-          <RoutineDetailChips />
+          <DetailChips label="heart" />
+          <DetailChips label="intense" />
         </div>
         <span className="flex gap-x-4">
           {" "}
@@ -70,7 +72,7 @@ const RouteDetails = () => {
           Cost: <h5> Free </h5>
         </span>
       </section>
-      <span className="w-full flex justify-center border-b-[1px]">
+      {/* <span className="w-full flex justify-center border-b-[1px]">
         <h2> Modules </h2>{" "}
       </span>
       <section className="space-y-5">
@@ -134,7 +136,7 @@ const RouteDetails = () => {
             Frequency (every week): <h5> Monday and Sunday </h5>
           </span>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
