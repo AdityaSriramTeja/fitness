@@ -10,16 +10,17 @@ CREATE TABLE Trainer(
   name TEXT NOT NULL
 );
 
+CREATE TABLE Trainer_Availablity(
+  id SERIAL PRIMARY KEY,
+  day TEXT NOT NULL,
+  starting_time TIME NOT NULL, -- All classes are implicitly expected to have a duration of exactly 1 hour
+  trainer_username TEXT,
+  FOREIGN KEY (trainer_username) REFERENCES Trainer(username)
+);
+
 CREATE TABLE Room(
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL
-);
-
-CREATE TABLE Schedule_Slot(
-  id SERIAL PRIMARY KEY,
-  date DATE NOT NULL,
-  starting_time TIME NOT NULL,
-  ending_time TIME NOT NULL
 );
 
 CREATE TABLE Class(
@@ -27,9 +28,9 @@ CREATE TABLE Class(
   name TEXT NOT NULL,
   is_group_class BOOLEAN NOT NULL,
   room_id INT,
-  schedule_slot_id INT,
+  day TEXT NOT NULL,
+  starting_time TIME NOT NULL, -- All classes are implicitly expected to have a duration of exactly 1 hour
   trainer_username TEXT,
-  FOREIGN KEY (schedule_slot_id) REFERENCES Schedule_Slot(id),
   FOREIGN KEY (room_id) REFERENCES Room(id),
   FOREIGN KEY (trainer_username) REFERENCES Trainer(username)
 );
