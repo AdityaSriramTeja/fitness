@@ -33,7 +33,7 @@ INSERT INTO Member (username, password, name, outstanding_balance, enrolled_clas
   ('member4', 'member4', 'Bob4', 0, 4),
   ('member5', 'member5', 'Bob5', 0, 5);
 
-INSERT INTO Achievements_Log (name, description, date, username) VALUES
+INSERT INTO Achievement (name, description, date, username) VALUES
   ('Achievement 1', 'Description 1', '2021-01-01', 'member1'),
   ('Achievement 2', 'Description 2', '2021-01-01', 'member2');
 
@@ -49,7 +49,7 @@ INSERT INTO Equipment (name, needs_maintenance, room_id) VALUES
   ('Equipment 1.2', TRUE, 1),
   ('Equipment 2', FALSE, 2);
 
-INSERT INTO Exercise_Routine_Log (name, date, num_reps, username) VALUES
+INSERT INTO Exercise_Routine (name, date, num_reps, username) VALUES
   ('Routine 1', '2021-01-01', 10, 'member1'),
   ('Routine 2', '2021-01-01', 20, 'member2');
 
