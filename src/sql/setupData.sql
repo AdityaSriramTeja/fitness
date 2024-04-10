@@ -7,16 +7,16 @@ INSERT INTO Trainer (username, password, name) VALUES
   ('trainer2', 'trainer2', 'NinjaTrainer2'),
   ('trainer3', 'trainer3', 'NinjaTrainer3');
 
-INSERT INTO Trainer_Availablity (date, starting_time, ending_time) VALUES
-  ('Monday', '09:00:00', 'trainer_1'),
-  ('Tuesday', '10:00:00', 'trainer_1'),
-  ('Wednesday', '11:00:00', 'trainer_1'),
-  ('Monday', '12:00:00', 'trainer_2'),
-  ('Tuesday', '13:00:00', 'trainer_2'),
-  ('Wednesday', '14:00:00', 'trainer_2'),
-  ('Monday', '15:00:00', 'trainer_3'),
-  ('Tuesday', '16:00:00', 'trainer_3'),
-  ('Wednesday', '17:00:00', 'trainer_3');
+INSERT INTO Trainer_Availablity (day, starting_time, trainer_username) VALUES
+  ('Monday', '09:00:00', 'trainer1'),
+  ('Tuesday', '10:00:00', 'trainer1'),
+  ('Wednesday', '11:00:00', 'trainer1'),
+  ('Monday', '12:00:00', 'trainer2'),
+  ('Tuesday', '13:00:00', 'trainer2'),
+  ('Wednesday', '14:00:00', 'trainer2'),
+  ('Monday', '15:00:00', 'trainer3'),
+  ('Tuesday', '16:00:00', 'trainer3'),
+  ('Wednesday', '17:00:00', 'trainer3');
 
 INSERT INTO Room (name) VALUES
   ('Room 1'),
@@ -24,11 +24,12 @@ INSERT INTO Room (name) VALUES
   ('Room 3');
 
 INSERT INTO Class (name, is_group_class, room_id, day, starting_time, trainer_username) VALUES
-  ('Class 1', TRUE, 1, 'Monday', '09:00:00', 'trainer1'),
-  ('Class 2', TRUE, 2, 'Monday', '12:00:00', 'trainer2'),
-  ('Class 3', TRUE, 3, 'Monday', '15:00:00', 'trainer3'),
-  ('Class 4', TRUE, 1, 'Monday', '10:00:00', 'trainer1'),
-  ('Class 5', FALSE, 2, 'Monday', '13:00:00', 'trainer2');
+  ('Class 1', TRUE, (SELECT id FROM Room WHERE name = 'Room 1'), 'Monday', '09:00:00', 'trainer1'),
+  ('Class 2', TRUE, (SELECT id FROM Room WHERE name = 'Room 2'), 'Monday', '12:00:00', 'trainer2'),
+  ('Class 3', TRUE, (SELECT id FROM Room WHERE name = 'Room 3'), 'Monday', '15:00:00', 'trainer3'),
+  ('Class 4', TRUE, (SELECT id FROM Room WHERE name = 'Room 1'), 'Monday', '10:00:00', 'trainer1'),
+  ('Class 5', FALSE, (SELECT id FROM Room WHERE name = 'Room 2'), 'Monday', '13:00:00', 'trainer2');
+
 
 INSERT INTO Member (username, password, name, outstanding_balance, enrolled_class_id) VALUES
   ('member1', 'member1', 'Bob1', 0, 1),
@@ -37,7 +38,7 @@ INSERT INTO Member (username, password, name, outstanding_balance, enrolled_clas
   ('member4', 'member4', 'Bob4', 0, 4),
   ('member5', 'member5', 'Bob5', 0, 5);
 
-INSERT INTO Achievement (name, description, date, username) VALUES
+INSERT INTO Achievements_Log (name, description, date, username) VALUES
   ('Achievement 1', 'Description 1', '2021-01-01', 'member1'),
   ('Achievement 2', 'Description 2', '2021-01-01', 'member2');
 
@@ -49,11 +50,11 @@ INSERT INTO Health_Profile (weight, average_sleep, average_calories_burnt, gende
   (150, 5, 1500, 'M', 25, 'member5');
 
 INSERT INTO Equipment (name, needs_maintenance, room_id) VALUES
-  ('Equipment 1.1', FALSE, 1),
-  ('Equipment 1.2', TRUE, 1),
-  ('Equipment 2', FALSE, 2);
+  ('Equipment 1.1', FALSE, (SELECT id FROM Room WHERE name = 'Room 1')),
+  ('Equipment 1.2', TRUE, (SELECT id FROM Room WHERE name = 'Room 2')),
+  ('Equipment 2', FALSE, (SELECT id FROM Room WHERE name = 'Room 3'));
 
-INSERT INTO Exercise_Routine (name, date, num_reps, username) VALUES
+INSERT INTO Exercise_Routine_Log (name, date, num_reps, username) VALUES
   ('Routine 1', '2021-01-01', 10, 'member1'),
   ('Routine 2', '2021-01-01', 20, 'member2');
 

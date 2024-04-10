@@ -20,7 +20,7 @@ CREATE TABLE Trainer_Availablity(
 
 CREATE TABLE Room(
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE Class(
