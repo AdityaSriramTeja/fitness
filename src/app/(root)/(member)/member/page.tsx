@@ -11,7 +11,7 @@ const Member = () => {
       <div className="h-[100vh] max-h-[300vh] grid   grid-cols-2 gap-4">
         <div className="border-2 rounded-xl p-5 space-y-10 ">
           <h4>Display health statistics </h4>
-          <div className="flex flex-wrap gap-5  max-h-[450px]">
+          <div className="flex flex-wrap flex-col gap-5  max-h-[450px]">
             <span className="text-lg font-semibold capitalize  bg-slate-500/50 px-3 rounded-lg">
               weight: 80
             </span>
@@ -26,6 +26,7 @@ const Member = () => {
             </span>
           </div>
         </div>
+
         <MemberAchievements />
         <MemberRoutine />
       </div>
