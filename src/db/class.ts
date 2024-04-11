@@ -6,7 +6,8 @@ export type ClassType = {
   name: string;
   is_group_class: boolean;
   room_id: number;
-  schedule_slot_id: number;
+  day: string;
+  starting_time: string;
   trainer_username: string;
 };
 
