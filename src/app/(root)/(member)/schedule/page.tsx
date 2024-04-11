@@ -1,24 +1,14 @@
 "use client";
 
-import {
-  CheckboxGroup,
-  Stack,
-  Checkbox,
-  Button,
-  Select,
-  SimpleGrid,
-  Box,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { SimpleGrid, Box, Heading, Text } from "@chakra-ui/react";
 
-import SelectClassDates from "@/components/ui/selectClassDates";
+import SelectClassDates from "@/app/(root)/(member)/schedule/_components/SelectClassDates";
 import { ClassType } from "@/db/class";
 import React, { useState, useEffect } from "react";
 
 const SchedulePage = () => {
   const [classes, setClasses] = useState<ClassType[]>([]);
-  
+
   useEffect(() => {
     async function fetchClass() {
       try {
@@ -38,15 +28,10 @@ const SchedulePage = () => {
         <SelectClassDates />
         <SimpleGrid columns={4} spacing={10}>
           {classes.map((classData) => (
-            <Box
-              key={classData.id}
-              p={5}
-              shadow="md"
-              borderWidth="1px"
-            >
+            <Box key={classData.id} p={5} shadow="md" borderWidth="1px">
               <Heading fontSize="xl">{classData.name}</Heading>
               <Text mt={4}>ID: {classData.id}</Text>
-              <Text mt={4}>Group Class: {classData.is_group_class ? 'Yes' : 'No'}</Text>
+              <Text mt={4}>Group Class: {classData.is_group_class ? "Yes" : "No"}</Text>
               <Text mt={4}>Room ID: {classData.room_id}</Text>
               <Text mt={4}>Day: {classData.day}</Text>
               <Text mt={4}>Starting Time: {classData.starting_time}</Text>
@@ -55,8 +40,6 @@ const SchedulePage = () => {
           ))}
         </SimpleGrid>
       </section>
-      
-
     </div>
   );
 };

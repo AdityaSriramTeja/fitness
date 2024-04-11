@@ -1,28 +1,18 @@
-import {
-  CheckboxGroup,
-  Stack,
-  Checkbox,
-  Button,
-  Select,
-  SimpleGrid,
-  Box,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { CheckboxGroup, Stack, Checkbox, Button, Select } from "@chakra-ui/react";
 
-import { ClassType } from "@/db/class";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 // HARD CODED DATA
-const classes = [{"id":1,"name":"Class 1","is_group_class":true,"room_id":1,"day":"Monday","starting_time":"09:00:00","trainer_username":"trainer1"},{"id":2,"name":"Class 2","is_group_class":true,"room_id":2,"day":"Monday","starting_time":"12:00:00","trainer_username":"trainer2"}];
+const classes = [
+  { id: 1, name: "Class 1", is_group_class: true, room_id: 1, day: "Monday", starting_time: "09:00:00", trainer_username: "trainer1" },
+  { id: 2, name: "Class 2", is_group_class: true, room_id: 2, day: "Monday", starting_time: "12:00:00", trainer_username: "trainer2" },
+];
 
 export default function SelectClassDates() {
   const [selectedValues, setSelectedValues] = useState<string[]>(days);
   // const [classValues, setClassValues] = useState<ClassType[]>([]);
-
-  console.log("selectedValues", selectedValues);
 
   const handleCheckboxChange = (value: string) => {
     const newSelectedValues = [...selectedValues];
@@ -35,7 +25,6 @@ export default function SelectClassDates() {
     setSelectedValues(newSelectedValues);
   };
 
-
   async function handleQueryClick() {
     try {
       const response = await fetch(`/class/byDays`, {
@@ -44,13 +33,13 @@ export default function SelectClassDates() {
         body: JSON.stringify({ days: selectedValues }),
       });
       const data = await response.json();
-      console.log("data", data)
+      console.log(data);
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
     // setDays(selectedValues);
     // setClasses(classValues);
-  };
+  }
 
   return (
     <div>
@@ -58,11 +47,7 @@ export default function SelectClassDates() {
         <CheckboxGroup colorScheme="green" defaultValue={days}>
           <Stack spacing={[1, 5]} direction={["column", "row"]}>
             {days.map((day) => (
-              <Checkbox
-                key={day}
-                value={day}
-                onChange={(e) => handleCheckboxChange(e.target.value)}
-              >
+              <Checkbox key={day} value={day} onChange={(e) => handleCheckboxChange(e.target.value)}>
                 {day}
               </Checkbox>
             ))}
@@ -81,4 +66,4 @@ export default function SelectClassDates() {
       </div>
     </div>
   );
-};
+}
