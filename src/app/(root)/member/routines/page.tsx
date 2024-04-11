@@ -1,4 +1,4 @@
-import { RedirectButton } from "@/app/(root)/member/_components/redirectBtn";
+import RedirectButton from "@/components/shared/RedirectBtn";
 import React from "react";
 import { QueryRoutine } from "@/components/ui/queryRoutine";
 import { DetailChips } from "@/components/shared/detailChips";

@@ -1,7 +1,6 @@
 import React from "react";
 import { AuthBtn } from "./authBtn";
-import { RedirectButton } from "../../app/(root)/member/_components/redirectBtn";
-import Link from "next/link";
+import RedirectButton from "./RedirectBtn";
 
 const AuthUI = ({ title, isSignIn }: { title: string; isSignIn: boolean }) => {
   return (

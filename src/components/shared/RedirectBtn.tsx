@@ -1,3 +1,5 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import Link from "next/link";
 import React from "react";
@@ -36,4 +38,5 @@ const RedirectButton = React.forwardRef<HTMLButtonElement, ButtonProps>(({ asChi
 
 RedirectButton.displayName = "RedirectButton";
 
-export { RedirectButton, buttonVariants };
+// export { buttonVariants };
+export default RedirectButton;

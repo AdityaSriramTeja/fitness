@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { RedirectButton } from "./redirectBtn";
+import RedirectButton from "@/components/shared/RedirectBtn";
 
 // Define an interface for your route object
 interface Route {
