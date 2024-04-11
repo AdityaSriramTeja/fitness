@@ -1,28 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
 import { AdminBookingDates } from "../_components/AdminBookingDates";
-import {
-  Button,
-  Input,
-  Radio,
-  RadioGroup,
-  Select,
-  Spinner,
-  Stack,
-} from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-} from "@chakra-ui/react";
+import { Button, Input, Radio, RadioGroup, Select, Spinner, Stack } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody } from "@chakra-ui/react";
 import { DetailChips } from "@/components/shared/detailChips";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { TrainerAvailabilityType } from "@/db/trainerAvailability";
 import { RoomType } from "@/db/room";
-import { ClassType } from "@/db/class";
 
 interface CreateClassType {
   name: string;
@@ -51,10 +36,7 @@ async function fetchTrainerSlots(days: string[]) {
   }
   return results;
 }
-async function createClassAndBookRoom(
-  createClass: CreateClassType,
-  selectedSlot: TrainerAvailabilityType
-) {
+async function createClassAndBookRoom(createClass: CreateClassType, selectedSlot: TrainerAvailabilityType) {
   if (createClass.name === "" || createClass.room_id === -1) {
     return;
   }
@@ -87,9 +69,9 @@ async function createClassAndBookRoom(
     }),
   });
 }
-async function fetchRooms(start_time: string | undefined) {
-  if (start_time === undefined) {
-    return;
+async function fetchRooms(start_time: string | undefined): Promise<RoomType[]> {
+  if (!start_time) {
+    return [];
   }
   const response = await fetch(`/roomAvailable?start_time=${start_time}`);
   const data = await response.json();
@@ -98,7 +80,7 @@ async function fetchRooms(start_time: string | undefined) {
     throw new Error(`Error rooms`);
   }
 
-  return data;
+  return data as RoomType[];
 }
 
 const AdminBooking = () => {
@@ -116,21 +98,17 @@ const AdminBooking = () => {
     queryFn: () => fetchTrainerSlots(filterDays),
   });
 
-  const queryClient = useQueryClient();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => fetchRooms(selectedSlot?.starting_time),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["getAllRooms"] });
-    },
-  });
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSlot, setSelectedSlot] =
-    useState<TrainerAvailabilityType | null>(null);
-  const { data: roomsData, isLoading: roomsIsLoading } = useQuery({
-    queryKey: ["getAllRooms", selectedSlot?.starting_time],
-    queryFn: () => fetchRooms(selectedSlot?.starting_time),
+  const [selectedSlot, setSelectedSlot] = useState<TrainerAvailabilityType | null>(null);
+  const {
+    data: roomsData,
+    isLoading: roomsIsLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["getAllRooms", selectedSlot?.starting_time ?? ""],
+    queryFn: () => fetchRooms(selectedSlot?.starting_time ?? ""),
   });
+
   const onOpen = (slot: TrainerAvailabilityType) => {
     setSelectedSlot(slot);
     setIsOpen(true);
@@ -180,15 +158,8 @@ const AdminBooking = () => {
           <ModalBody>
             {selectedSlot && (
               <Stack direction={"column"} spacing={6}>
-                <Input
-                  placeholder="Classs Name"
-                  size="md"
-                  onChange={handleNameChange}
-                />
-                <RadioGroup
-                  defaultValue="group_class"
-                  onChange={handleGroupChange}
-                >
+                <Input placeholder="Classs Name" size="md" onChange={handleNameChange} />
+                <RadioGroup defaultValue="group_class" onChange={handleGroupChange}>
                   <Stack spacing={4} direction="row">
                     <Radio value="group_class">Group</Radio>
                     <Radio value="personal_class">Personal</Radio>
@@ -197,14 +168,10 @@ const AdminBooking = () => {
                 {roomsIsLoading ? (
                   <Spinner />
                 ) : (
-                  <Select placeholder="Select Room">
+                  <Select placeholder="Select Room" onChange={(e) => handleRoomChange(parseInt(e.target.value))}>
                     {roomsData &&
                       roomsData.map((room: RoomType) => (
-                        <option
-                          key={room.id}
-                          value="option1"
-                          onClick={() => handleRoomChange(room.id)}
-                        >
+                        <option key={room.id} value={room.id}>
                           {room.name}
                         </option>
                       ))}
@@ -217,10 +184,7 @@ const AdminBooking = () => {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button
-              colorScheme="green"
-              onClick={() => createClassAndBookRoom(createClass, selectedSlot!)}
-            >
+            <Button colorScheme="green" onClick={() => createClassAndBookRoom(createClass, selectedSlot!)}>
               Book
             </Button>
           </ModalFooter>
@@ -234,17 +198,11 @@ const AdminBooking = () => {
             slotData && slotData!.length > 0 ? (
               slotData.map((slot: TrainerAvailabilityType) => {
                 return (
-                  <div
-                    key={slot.id}
-                    className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]"
-                  >
+                  <div key={slot.id} className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]">
                     <span className="flex w-full justify-between">
                       <div>
-                        {" "}
-                        <h2 className="text-xl font-bold">
-                          {slot.trainer_username}
-                        </h2>{" "}
-                      </div>{" "}
+                        <h2 className="text-xl font-bold">{slot.trainer_username}</h2>
+                      </div>
                       <DetailChips label={slot.day.substring(0, 3)} />
                     </span>
 
@@ -256,7 +214,7 @@ const AdminBooking = () => {
                       <Button
                         onClick={() => {
                           onOpen(slot);
-                          mutate();
+                          refetch();
                         }}
                       >
                         {slot.starting_time}
