@@ -1,48 +1,31 @@
 "use client";
-import { DetailChips } from "@/components/shared/detailChips";
-import { SelectClassDates } from "@/components/ui/selectClassDates";
-import React, { useState } from "react";
 
-// CREATE TABLE Class(
-//   id SERIAL PRIMARY KEY,
-//   name TEXT NOT NULL,
-//   is_group_class BOOLEAN NOT NULL,
-//   room_id INT,
-//   schedule_slot_id INT,
-//   trainer_username TEXT,
-//   FOREIGN KEY (schedule_slot_id) REFERENCES Schedule_Slot(id),
-//   FOREIGN KEY (room_id) REFERENCES Room(id),
-//   FOREIGN KEY (trainer_username) REFERENCES Trainer(username)
-// );
+import { SimpleGrid, Box, Heading, Text } from "@chakra-ui/react";
+
+import SelectClassDates from "@/app/(root)/(member)/schedule/_components/SelectClassDates";
+import { ClassType } from "@/db/class";
+import React, { useState, useEffect } from "react";
 
 const SchedulePage = () => {
-  const [days, setDays] = useState([]);
+  const [classes, setClasses] = useState<ClassType[]>([]);
+
   return (
     <div className="h-full p-10 flex flex-col">
       <section className="w-full ">
-        {" "}
-        <SelectClassDates setDays={setDays} />{" "}
-      </section>
-      <p> {JSON.stringify(days)}</p>
-      <section className="flex flex-wrap gap-5 ">
-        <div className="w-[30vw] border-2 p-5 rounded-lg flex flex-col justify-evenly gap-y-6">
-          <span className="flex gap-4 flex-wrap">
-            {" "}
-            <DetailChips label="Group" /> <DetailChips label="Monday" />{" "}
-            <DetailChips label="Tuesday" />{" "}
-          </span>
-
-          <h2 className="font-bold text-xl"> Cardio </h2>
-          <span> Room Number: 203</span>
-          <span> Trainer: Bob</span>
-          <span> Days: Monday and Tuesday </span>
-          <div className=" w-full flex justify-center">
-            <button className="border-2 p-2 rounded-xl bg-green-400 hover:bg-green-500">
-              {" "}
-              Add Course{" "}
-            </button>
-          </div>
-        </div>
+        <SelectClassDates setClasses={setClasses} />
+        <SimpleGrid columns={4} spacing={10}>
+          {classes.map((classData) => (
+            <Box key={classData.id} p={5} shadow="md" borderWidth="1px">
+              <Heading fontSize="xl">{classData.name}</Heading>
+              <Text mt={4}>ID: {classData.id}</Text>
+              <Text mt={4}>Group Class: {classData.is_group_class ? "Yes" : "No"}</Text>
+              <Text mt={4}>Room ID: {classData.room_id}</Text>
+              <Text mt={4}>Day: {classData.day}</Text>
+              <Text mt={4}>Starting Time: {classData.starting_time}</Text>
+              <Text mt={4}>Trainer Username: {classData.trainer_username}</Text>
+            </Box>
+          ))}
+        </SimpleGrid>
       </section>
     </div>
   );

@@ -1,13 +1,9 @@
 import { createClass, getClass } from "@/db/class";
 import { NextRequest } from "next/server";
 
-export async function GET(request: Request) {
-  const data = await getClass();
-  return new Response(JSON.stringify(data), {
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+export async function GET(req: Request) {
+  const res = await getClass();
+  return new Response(JSON.stringify(res));
 }
 
 export async function POST(req: NextRequest) {
