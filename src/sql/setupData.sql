@@ -9,6 +9,7 @@ INSERT INTO Trainer (username, password, name) VALUES
 
 INSERT INTO Trainer_Availability (day, starting_time, trainer_username) VALUES
   ('Monday', '09:00:00', 'trainer1'),
+  ('Monday', '11:00:00', 'trainer1'),
   ('Tuesday', '10:00:00', 'trainer1'),
   ('Wednesday', '11:00:00', 'trainer1'),
   ('Monday', '12:00:00', 'trainer2'),

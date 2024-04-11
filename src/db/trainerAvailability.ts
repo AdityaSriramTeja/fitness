@@ -13,6 +13,16 @@ export async function getTrainerAvailabilities(trainer_username: string): Promis
   return slot as unknown as TrainerAvailabilityType[];
 }
 
+export async function getTrainerAvailabilitiesByDay(
+  day: string
+): Promise<TrainerAvailabilityType[]> {
+  const slot = await db.execute(
+    sql`select * from Trainer_Availability where day = ${day}`
+  );
+  return slot as unknown as TrainerAvailabilityType[];
+}
+
+
 export async function createTrainerAvailability(trainer_username: string, day: string, starting_time: string): Promise<void> {
   await db.execute(sql`insert into Trainer_Availability (trainer_username, day, starting_time) values (${trainer_username}, ${day}, ${starting_time})`);
 }
