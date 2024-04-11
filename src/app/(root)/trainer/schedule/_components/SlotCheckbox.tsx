@@ -1,28 +1,56 @@
-import React from "react";
-import { Checkbox, Flex } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+"use client";
+
+import React, { useMemo } from "react";
+import { Checkbox, Spinner } from "@chakra-ui/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TrainerAvailabilityType } from "@/db/trainerAvailability";
 
 export type PropType = {
-  day: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
-  startTime: {
-    label: "9AM - 10AM" | "10AM - 11AM" | "11AM - 12PM" | "12PM - 1PM" | "1PM - 2PM" | "2PM - 3PM" | "3PM - 4PM" | "4PM - 5PM" | "5PM - 6PM" | "6PM - 7PM" | "7PM - 8PM" | "8PM - 9PM";
-    value: "09:00:00" | "10:00:00" | "11:00:00" | "12:00:00" | "13:00:00" | "14:00:00" | "15:00:00" | "16:00:00" | "17:00:00" | "18:00:00" | "19:00:00" | "20:00:00";
-  };
+  day: string;
+  startingTime: string;
   trainerUsername: string;
 };
 
-async function fetchTrainerSlots(trainerUsername: string) {
-  const response = await fetch(`/scheduleSlot/${trainerUsername}/slots`);
-  const data = await response.json();
-  return data;
-}
+export default function SlotCheckbox({ day, startingTime, trainerUsername }: PropType) {
+  // handler functions
+  async function fetchTrainerSlots() {
+    const response = await fetch(`/trainerAvailability?trainerUsername=${trainerUsername}`);
+    const data = await response.json();
+    return data as TrainerAvailabilityType[];
+  }
 
-export default function SlotCheckbox({ day, startTime, trainerUsername }: PropType) {
+  async function updateTrainerSlot() {
+    if (!isAvail) {
+      await fetch(`/trainerAvailability`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ trainerUsername, day, startingTime }),
+      });
+    } else {
+      await fetch(`/trainerAvailability`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ trainerUsername, day, startingTime }),
+      });
+    }
+  }
+
+  // react-query
+  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["getTrainerSlots", trainerUsername], queryFn: fetchTrainerSlots });
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateTrainerSlot,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getTrainerSlots"] });
+    },
+  });
 
-  return (
-    <Flex>
-      <Checkbox colorScheme="green" size="lg" />
-    </Flex>
-  );
+  // computed values
+  const isAvail = useMemo(() => {
+    return data?.some((slot: TrainerAvailabilityType) => slot.day === day && slot.starting_time === startingTime);
+  }, [data, day, startingTime]);
+
+  if (isLoading || isPending) return <Spinner size="sm" />;
+
+  return <Checkbox colorScheme="green" size="lg" isChecked={isAvail} onChange={() => mutate()} />;
 }
