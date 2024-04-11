@@ -36,7 +36,6 @@ export default function SelectClassDates({setClasses}: PropType) {
     setSelectedValues(newSelectedValues);
   };
 
-
   async function handleQueryClick() {
     try {
       const response = await fetch(`/class/byDays`, {
