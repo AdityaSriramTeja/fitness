@@ -1,15 +1,5 @@
 import { ClassType } from "@/db/class";
-import {
-  CheckboxGroup,
-  Stack,
-  Checkbox,
-  Button,
-  Select,
-  SimpleGrid,
-  Box,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { CheckboxGroup, Stack, Checkbox, Button, Select, SimpleGrid, Box, Heading, Text } from "@chakra-ui/react";
 
 import React, { useState, useEffect } from "react";
 
@@ -19,11 +9,8 @@ export type PropType = {
   setClasses: (classes: ClassType[]) => void;
 };
 
-export default function SelectClassDates({setClasses}: PropType) {
+export default function SelectClassDates({ setClasses }: PropType) {
   const [selectedValues, setSelectedValues] = useState<string[]>(days);
-  // const [classValues, setClassValues] = useState<ClassType[]>([]);
-
-  console.log("selectedValues", selectedValues);
 
   const handleCheckboxChange = (value: string) => {
     const newSelectedValues = [...selectedValues];
@@ -49,7 +36,7 @@ export default function SelectClassDates({setClasses}: PropType) {
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
-  };
+  }
 
   return (
     <div>
@@ -57,11 +44,7 @@ export default function SelectClassDates({setClasses}: PropType) {
         <CheckboxGroup colorScheme="green" defaultValue={days}>
           <Stack spacing={[1, 5]} direction={["column", "row"]}>
             {days.map((day) => (
-              <Checkbox
-                key={day}
-                value={day}
-                onChange={(e) => handleCheckboxChange(e.target.value)}
-              >
+              <Checkbox key={day} value={day} onChange={(e) => handleCheckboxChange(e.target.value)}>
                 {day}
               </Checkbox>
             ))}
@@ -80,4 +63,4 @@ export default function SelectClassDates({setClasses}: PropType) {
       </div>
     </div>
   );
-};
+}

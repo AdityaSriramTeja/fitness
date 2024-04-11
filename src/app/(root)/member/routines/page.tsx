@@ -1,4 +1,4 @@
-import { RedirectButton } from "@/components/shared/redirectBtn";
+import { RedirectButton } from "@/app/(root)/member/_components/redirectBtn";
 import React from "react";
 import { QueryRoutine } from "@/components/ui/queryRoutine";
 import { DetailChips } from "@/components/shared/detailChips";
@@ -53,10 +53,7 @@ const RoutinesPage = () => {
             Cost: <h5> Free </h5>
           </span>
           <RedirectButton route="/routines/1"> More Details </RedirectButton>
-          <button className="p-3 bg-green-600 w-full rounded-xl hover:bg-green-700/80">
-            {" "}
-            Add course{" "}
-          </button>
+          <button className="p-3 bg-green-600 w-full rounded-xl hover:bg-green-700/80"> Add course </button>
         </div>
       </section>
     </div>

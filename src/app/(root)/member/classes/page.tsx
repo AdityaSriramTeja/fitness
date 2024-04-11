@@ -2,11 +2,11 @@
 
 import { SimpleGrid, Box, Heading, Text } from "@chakra-ui/react";
 
-import SelectClassDates from "@/app/(root)/(member)/schedule/_components/SelectClassDates";
+import SelectClassDates from "./_components/SelectClassDates";
 import { ClassType } from "@/db/class";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const SchedulePage = () => {
+export default function Classes() {
   const [classes, setClasses] = useState<ClassType[]>([]);
 
   return (
@@ -29,6 +29,4 @@ const SchedulePage = () => {
       </section>
     </div>
   );
-};
-
-export default SchedulePage;
+}

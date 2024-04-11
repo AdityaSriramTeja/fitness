@@ -1,26 +1,26 @@
 "use client";
 
 import React from "react";
-import { RedirectButton } from "@/app/(root)/member/_components/redirectBtn";
+import { RedirectButton } from "./redirectBtn";
 
+// Define an interface for your route object
 interface Route {
   path: string;
   label: string;
 }
 
 const routes: Route[] = [
-  { path: "/trainer", label: "Dashboard" },
-  { path: "/trainer/schedule", label: "Schedule" },
-  { path: "/trainer/members", label: "Members" },
-  { path: "/trainer/profile", label: "Profile" },
+  { path: "/member", label: "Dashboard" },
+  { path: "/member/classes", label: "Classes" },
+  { path: "/member/routines", label: "Routines" },
+  { path: "/member/profile", label: "Profile" },
 ];
 
-export default function Navbar() {
+export default function UserNav() {
   return (
     <header className=" border-b-[1px] px-5 p-5 flex items-center justify-between">
       <span className="flex items-center gap-x-2">
-        <div className="w-7 h-7 bg-white rounded-md shrink-0" />
-        username
+        <div className="w-7 h-7 bg-white rounded-md shirnk-0" /> username{" "}
       </span>
 
       <ul className="flex gap-x-10">
