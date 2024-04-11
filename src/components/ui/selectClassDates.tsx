@@ -36,7 +36,18 @@ export default function SelectClassDates() {
   };
 
 
-  const handleQueryClick = () => {
+  async function handleQueryClick() {
+    try {
+      const response = await fetch(`/class/byDays`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ days: selectedValues }),
+      });
+      const data = await response.json();
+      console.log("data", data)
+    } catch (error) {
+      console.error("Error fetching classes:", error);
+    }
     // setDays(selectedValues);
     // setClasses(classValues);
   };
