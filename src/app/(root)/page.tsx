@@ -1,4 +1,4 @@
-import { RedirectButton } from "@/components/shared/redirectBtn";
+import { RedirectButton } from "@/app/(root)/member/_components/redirectBtn";
 import Image from "next/image";
 
 export default function Home() {

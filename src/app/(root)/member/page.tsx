@@ -1,6 +1,5 @@
 import { MemberAchievements } from "@/components/memberAchievements";
 import { MemberRoutine } from "@/components/memberRoutines";
-import { UserNav } from "@/components/shared/userNav";
 import React from "react";
 
 const Member = () => {
