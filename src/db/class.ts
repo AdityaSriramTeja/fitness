@@ -16,6 +16,20 @@ export async function getClass(): Promise<ClassType[]> {
   return classFitness as unknown as ClassType[];
 }
 
+
+export async function createClass(
+  name: string,
+  is_group_class: boolean,
+  room_id: number,
+  day: string,
+  starting_time: number,
+  trainer_username: string
+): Promise<void> {
+  await db.execute(
+    sql`insert into Class (name, is_group_class, room_id, day, starting_time, trainer_username) values (${name}, ${is_group_class}, ${room_id}, ${day}, ${starting_time}, ${trainer_username})`
+  );
+}
+
 export async function getClassByDays(days: string[]): Promise<ClassType[]> {
   const sqlChunks: SQL[] = [];
 
@@ -36,3 +50,4 @@ export async function getClassByDays(days: string[]): Promise<ClassType[]> {
 
   return classFitness as unknown as ClassType[];
 }
+
