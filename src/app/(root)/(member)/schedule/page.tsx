@@ -9,23 +9,10 @@ import React, { useState, useEffect } from "react";
 const SchedulePage = () => {
   const [classes, setClasses] = useState<ClassType[]>([]);
 
-  useEffect(() => {
-    async function fetchClass() {
-      try {
-        const response = await fetch(`/class`);
-        const data = await response.json();
-        setClasses(data);
-      } catch (error) {
-        console.error("Error fetching classes:", error);
-      }
-    }
-    fetchClass();
-  }, []);
-
   return (
     <div className="h-full p-10 flex flex-col">
       <section className="w-full ">
-        <SelectClassDates />
+        <SelectClassDates setClasses={setClasses} />
         <SimpleGrid columns={4} spacing={10}>
           {classes.map((classData) => (
             <Box key={classData.id} p={5} shadow="md" borderWidth="1px">
