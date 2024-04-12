@@ -1,5 +1,3 @@
-"use client";
-
 import { NextRequest } from "next/server";
 import { addMember } from "@/db/member";
 import { addTrainer } from "@/db/trainer";
@@ -19,14 +17,20 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  if (userType === "member") {
-    await addMember(username, password, name);
-  } else if (userType === "trainer") {
-    await addTrainer(username, password, name);
-  } else if (userType === "admin") {
-    await addAdmin(username, password, name);
-  } else {
-    return new Response("Invalid user type", {
+  try {
+    if (userType === "member") {
+      await addMember(username, password, name);
+    } else if (userType === "trainer") {
+      await addTrainer(username, password, name);
+    } else if (userType === "admin") {
+      await addAdmin(username, password, name);
+    } else {
+      return new Response("Invalid user type", {
+        status: 400,
+      });
+    }
+  } catch (e) {
+    return new Response("Failed to create user (is username unique?)", {
       status: 400,
     });
   }

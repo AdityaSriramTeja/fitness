@@ -24,19 +24,19 @@ export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
       <Heading size="md">{title}</Heading>
       <FormControl>
         <FormLabel>Username</FormLabel>
-        <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input isRequired={true} type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         <FormHelperText>Enter a unique username. Uniqueness is enforced in PostgreSQL.</FormHelperText>
         {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
       </FormControl>
       <FormControl>
         <FormLabel>Password</FormLabel>
-        <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Input isRequired={true} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <FormHelperText>Enter a password.</FormHelperText>
         {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
       </FormControl>
       <FormControl>
         <FormLabel>Name</FormLabel>
-        <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <Input isRequired={true} type="text" value={name} onChange={(e) => setName(e.target.value)} />
         <FormHelperText>Enter your full name.</FormHelperText>
         {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
       </FormControl>
