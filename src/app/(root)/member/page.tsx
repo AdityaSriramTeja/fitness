@@ -2,6 +2,7 @@
 import { MemberAchievements } from "@/components/memberAchievements";
 import { MemberRoutine } from "@/components/memberRoutines";
 import { useUsername } from "@/hooks/auth";
+import { Spinner } from "@chakra-ui/react";
 import React from "react";
 
 const Member = () => {
@@ -28,9 +29,15 @@ const Member = () => {
             </span>
           </div>
         </div>
-
-        <MemberAchievements username={username} />
-        <MemberRoutine username={username} />
+        {username ? (
+          <>
+            {" "}
+            <MemberAchievements username={username} />
+            <MemberRoutine username={username} />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
   );

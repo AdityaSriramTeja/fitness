@@ -38,11 +38,11 @@ export async function addMember(
 export async function getMemberByName(name: string): Promise<MemberCard[]> {
   const member = await db.execute(
     sql`select username, name from member where LOWER(name) like ${sql.raw(
-      `'%${name}%'`
+      `LOWER('%${name}%')`
     )}`
   );
   return member as unknown as MemberCard[];
-
+}
 
 export async function getMemberByUsername(username: string): Promise<MemberType[]> {
   const member = await db.execute(sql`select username, name from Member where username = ${username}`);
