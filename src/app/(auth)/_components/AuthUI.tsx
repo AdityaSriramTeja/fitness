@@ -34,12 +34,14 @@ export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
         <FormHelperText>Enter a password.</FormHelperText>
         {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
       </FormControl>
-      <FormControl>
-        <FormLabel>Name</FormLabel>
-        <Input isRequired={true} type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <FormHelperText>Enter your full name.</FormHelperText>
-        {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
-      </FormControl>
+      {isSignIn ? null : (
+        <FormControl>
+          <FormLabel>Name</FormLabel>
+          <Input isRequired={true} type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <FormHelperText>Enter your full name.</FormHelperText>
+          {/* <FormErrorMessage>Email is required.</FormErrorMessage> */}
+        </FormControl>
+      )}
 
       {isSignIn ? null : (
         <RadioGroup onChange={setUserType} value={userType}>

@@ -8,10 +8,17 @@ export type MemberType = {
   outstanding_balance: number;
   enrolled_class_id: number;
 };
+
 export type MemberCard = {
   username: string;
   name: string;
 };
+
+export async function userExists(tableName: string, username: string, password: string): Promise<boolean> {
+  const user = await db.execute(sql`select * from ${sql.raw(tableName)} where username = ${username} and password = ${password}`);
+  return user.length > 0;
+}
+
 export async function getMember(): Promise<MemberType[]> {
   const member = await db.execute(sql`select * from Member`);
   return member as unknown as MemberType[];
@@ -27,6 +34,7 @@ export async function addMember(
   );
 }
 
+
 export async function getMemberByName(name: string): Promise<MemberCard[]> {
   const member = await db.execute(
     sql`select username, name from member where LOWER(name) like ${sql.raw(
@@ -34,16 +42,9 @@ export async function getMemberByName(name: string): Promise<MemberCard[]> {
     )}`
   );
   return member as unknown as MemberCard[];
-}
 
-export async function getMemberProfileByUsername(
-  username: string
-): Promise<MemberType[]> {
-  const member = await db.execute(
-    sql`select username, name from Member where name = ${username}`
-  );
+
+export async function getMemberProfileByUsername(username: string): Promise<MemberType[]> {
+  const member = await db.execute(sql`select username, name from Member where name = ${username}`);
   return member as unknown as MemberType[];
 }
-
-
-
