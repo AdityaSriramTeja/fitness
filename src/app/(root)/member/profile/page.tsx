@@ -39,28 +39,22 @@ export default function ProfilePage() {
   return (
     <div className="p-10 h-full flex flex-col gap-y-10 ">
       <section className="flex items-center w-full gap-x-5">
-        {" "}
-        <div className="w-20 h-20 bg-black rounded-xl" />{" "}
+        <div className="w-20 h-20 bg-black rounded-xl" />
         <h1 className="font-bold text-xl flex-1"> Username </h1>
         <button className="p-2 rounded-lg border-2 hover:bg-slate-400/40 shadow-md">
-          {" "}
-          Settings{" "}
+          Settings
         </button>
       </section>
       <section className="flex flex-wrap w-full gap-10">
         <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative">
           <span className="flex w-full lg:items-center justify-between lg:flex-row flex-col items-start gap-y-3 ">
-            {" "}
             <h3 className="capitalize font-semibold ">
-              {" "}
-              Outstanding Membership fee:{" "}
+              Outstanding Membership fee:
             </h3>
             <button className="border-2 text-sm shadow-sm  px-4 py-2 rounded-md hover:bg-slate-400/40">
-              {" "}
-              Transactions{" "}
-            </button>{" "}
+              Transactions
+            </button>
           </span>
-
           <h4 className="absolute bottom-5 right-5 md:text-6xl font-bold text-3xl ">
             ${fees !== undefined ? `${fees}` : <Spinner />}
           </h4>
