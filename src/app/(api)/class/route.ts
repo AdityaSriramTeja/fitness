@@ -8,17 +8,11 @@ export async function GET(req: Request) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(body);
-  await createClass(
-    body.name,
-    body.is_group_class,
-    body.room_id,
-    body.day,
-    body.start_time,
-    body.trainer_username
-  );
 
-  return new Response("Slot created", {
+  // Create the class BUT also removes the corresponding trainer availability slot
+  await createClass(body.name, body.is_group_class, body.room_id, body.day, body.start_time, body.trainer_username);
+
+  return new Response("Class created (and trainer availability updated)", {
     status: 201,
   });
 }

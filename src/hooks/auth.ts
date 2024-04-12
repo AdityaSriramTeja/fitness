@@ -11,3 +11,11 @@ export function useUsername() {
 
   return username;
 }
+
+export function useAuth() {
+  function signOut() {
+    window.localStorage.removeItem("username");
+  }
+
+  return { signOut };
+}

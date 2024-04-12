@@ -1,26 +1,30 @@
 "use client";
 
-import React from "react";
-import RedirectButton from "@/components/shared/RedirectBtn";
+import { useAuth, useUsername } from "@/hooks/auth";
+import RedirectButton from "./RedirectBtn";
+import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 
-interface Route {
+type Route = {
   path: string;
   label: string;
-}
+};
 
-const routes: Route[] = [
-  { path: "/trainer", label: "Dashboard" },
-  { path: "/trainer/schedule", label: "Schedule" },
-  { path: "/trainer/members", label: "Members" },
-  { path: "/trainer/profile", label: "Profile" },
-];
+export default function Navbar({ routes }: { routes: Route[] }) {
+  const username = useUsername();
+  const { signOut } = useAuth();
 
-export default function Navbar() {
+  // useEffect(() => {
+  //   if (!username) {
+  //     window.location.href = "/login";
+  //   }
+  // }, [username]);
+
   return (
     <header className=" border-b-[1px] px-5 p-5 flex items-center justify-between">
       <span className="flex items-center gap-x-2">
         <div className="w-7 h-7 bg-white rounded-md shrink-0" />
-        username
+        {username}
       </span>
 
       <ul className="flex gap-x-10">
@@ -34,6 +38,10 @@ export default function Navbar() {
           );
         })}
       </ul>
+
+      <Link href="/">
+        <Button onClick={signOut}>Log Out</Button>
+      </Link>
     </header>
   );
 }

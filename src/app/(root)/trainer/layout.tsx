@@ -1,10 +1,17 @@
+import Navbar from "@/components/shared/Navbar";
 import React from "react";
-import Navbar from "./_components/Navbar";
+
+const routes = [
+  { path: "/trainer", label: "Dashboard" },
+  { path: "/trainer/schedule", label: "Schedule" },
+  { path: "/trainer/members", label: "Members" },
+  { path: "/trainer/profile", label: "Profile" },
+];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <Navbar />
+      <Navbar routes={routes} />
       {children}
     </div>
   );
