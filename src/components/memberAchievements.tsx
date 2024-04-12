@@ -3,7 +3,7 @@
 import { AchievementType } from "@/db/achievements";
 import { Spinner } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 async function getData(username: string): Promise<AchievementType[]> {
   const response = await fetch(`/memberAchievement?username=${username}`);

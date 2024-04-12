@@ -22,6 +22,11 @@ export async function createClass(name: string, is_group_class: boolean, room_id
   await db.execute(sql`delete from Trainer_Availability where day=${day} and starting_time=${starting_time} and trainer_username=${trainer_username}`);
 }
 
+export async function getClassById(id: string): Promise<ClassType[]> {
+  const classData = await db.execute(sql`select * from Class where id = ${id}`);
+  return classData as unknown as ClassType[];
+}
+
 export async function getClassByDays(days: string[]): Promise<ClassType[]> {
   const sqlChunks: SQL[] = [];
 
