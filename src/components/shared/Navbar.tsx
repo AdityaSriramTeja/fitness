@@ -4,6 +4,7 @@ import { useAuth, useUsername } from "@/hooks/auth";
 import RedirectButton from "./RedirectBtn";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 type Route = {
   path: string;
@@ -16,7 +17,7 @@ export default function Navbar({ routes }: { routes: Route[] }) {
 
   useEffect(() => {
     if (!username) {
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   }, [username]);
 
