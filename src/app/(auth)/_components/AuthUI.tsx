@@ -8,6 +8,8 @@ import { NewUserType } from "../signup/page";
 type PropType = { title: string; isSignIn: boolean; handleSubmit: (newUser: NewUserType) => void };
 
 export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
+  const [loading, setLoading] = useState(false);
+
   const [userType, setUserType] = useState("member");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +17,12 @@ export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
 
   return (
     <form
-      className="w-[70vw]  border-2 p-5 space-y-10 rounded-xl"
-      onSubmit={(e) => {
+      className="w-[500px]  border-2 p-5 space-y-10 rounded-xl"
+      onSubmit={async (e) => {
         e.preventDefault();
-        handleSubmit({ userType, username, password, name });
+        setLoading(true);
+        await handleSubmit({ userType, username, password, name });
+        setLoading(false);
       }}
     >
       <Heading size="md">{title}</Heading>
@@ -54,7 +58,7 @@ export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
       )}
 
       <div className="flex flex-col items-center w-full gap-y-6">
-        <Button colorScheme="blue" type="submit" w="full">
+        <Button colorScheme="blue" type="submit" w="full" isLoading={loading} loadingText={"Loading..."}>
           {isSignIn ? "Log In" : "Sign Up"}
         </Button>
         <hr className="w-full" />
