@@ -17,3 +17,22 @@ export async function getMember(): Promise<MemberType[]> {
 export async function addMember(username: string, password: string, name: string): Promise<void> {
   await db.execute(sql`insert into Member (username, password, name, outstanding_balance, enrolled_class_id) values (${username}, ${password}, ${name}, 0, null)`);
 }
+
+export async function getMemberByName(name: string): Promise<MemberType[]> {
+  const member = await db.execute(
+    sql`select username, name from Member where name = ${name}`
+  );
+  return member as unknown as MemberType[];
+}
+
+export async function getMemberProfileByUsername(
+  username: string
+): Promise<MemberType[]> {
+  const member = await db.execute(
+    sql`select username, name from Member where name = ${username}`
+  );
+  return member as unknown as MemberType[];
+}
+
+
+

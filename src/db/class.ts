@@ -45,7 +45,7 @@ export async function getClassByDays(days: string[]): Promise<ClassType[]> {
 export async function bookClass(username: string, enrolled_class_id: number): Promise<ClassType[]> {
   const sqlChunks: SQL[] = [];
   sqlChunks.push(sql`UPDATE Member SET enrolled_class_id = ${enrolled_class_id} WHERE username = ${username}`);
-  
+
   const query: SQL = sql.join(sqlChunks, sql.raw(" "));
   const classFitness = await db.execute(query);
 
@@ -55,7 +55,7 @@ export async function bookClass(username: string, enrolled_class_id: number): Pr
 export async function unEnroll(username: string): Promise<ClassType[]> {
   const sqlChunks: SQL[] = [];
   sqlChunks.push(sql`UPDATE Member SET enrolled_class_id = NULL WHERE username = ${username}`);
-  
+
   const query: SQL = sql.join(sqlChunks, sql.raw(" "));
   const classFitness = await db.execute(query);
 
@@ -65,11 +65,21 @@ export async function unEnroll(username: string): Promise<ClassType[]> {
 export async function isEnrolled(username: string): Promise<Boolean> {
   const sqlChunks: SQL[] = [];
   sqlChunks.push(sql`SELECT * FROM Member WHERE username = ${username} AND enrolled_class_id IS NOT NULL`);
-  
+
   const query: SQL = sql.join(sqlChunks, sql.raw(" "));
   const classFitness = await db.execute(query);
   if (classFitness.length === 0) {
     return false;
   }
   return true;
+}
+
+
+export async function getClassByUsername(
+  username: string
+): Promise<ClassType[]> {
+  const classFitness = await db.execute(
+    sql`select c.id, c.name, c.is_group_class, c.room_id, c.day, c.starting_time, c.trainer_username from class c inner join member m on c.id = m.enrolled_class_id where m.username = ${username}`
+  );
+  return classFitness as unknown as ClassType[];
 }

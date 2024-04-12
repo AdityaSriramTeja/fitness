@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import AuthUI from "../_components/AuthUI";
 
 export type NewUserType = {
@@ -11,9 +10,21 @@ export type NewUserType = {
 };
 
 export default function SignUp() {
-  const [user, setUser] = useState<NewUserType | null>(null);
+  async function handleSubmit(newUser: NewUserType) {
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
 
-  function handleSubmit(newUser: NewUserType) {
+    if (!res.ok) {
+      alert("Failed to create user (is username unique?)");
+      return;
+    }
+
+    window.localStorage.setItem("user", newUser.username);
     window.location.href = `/${newUser.userType}`;
   }
 
