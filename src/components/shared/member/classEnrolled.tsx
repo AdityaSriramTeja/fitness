@@ -11,6 +11,7 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 async function getData(username: string): Promise<ClassType[]> {
   const response = await fetch(`/memberClassEnrolled?username=${username}`);
@@ -30,7 +31,7 @@ const MemberClassEnrolled = ({ username }: { username: string }) => {
   });
 
   if (isLoading) {
-    return <div> Loading </div>;
+    return <Spinner />;
   }
   return (
     <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative min-h-[250px]">

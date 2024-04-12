@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Spinner,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -88,7 +89,7 @@ export const MemberRoutine = ({ username }: { username: string }) => {
   ];
 
   if (isLoading) {
-    return <div> Loading </div>;
+    return <Spinner />;
   }
   return (
     <div className="border-2 rounded-xl p-5 col-span-2 h-[450px]  gap-y-10  overflow-y-auto flex flex-col">

@@ -5,7 +5,7 @@ import AdminBookingDates from "./_components/AdminBookingDates";
 import { useQuery } from "@tanstack/react-query";
 import { TrainerAvailabilityType } from "@/db/trainerAvailability";
 import NewClassModal from "./_components/NewClassModal";
-import { Badge, Button, Code, Flex } from "@chakra-ui/react";
+import { Badge, Button, Code, Flex, Spinner } from "@chakra-ui/react";
 import { RoomType } from "@/db/room";
 import { TrainerType } from "@/db/trainer";
 import { getColorByDay } from "@/lib/utils";
@@ -58,7 +58,8 @@ async function fetchTrainers() {
 export default function AdminBooking() {
   const [filterDays, setFilterDays] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState<TrainerAvailabilityType | null>(null);
+  const [selectedSlot, setSelectedSlot] =
+    useState<TrainerAvailabilityType | null>(null);
 
   const {
     data: roomsData,
@@ -120,10 +121,15 @@ export default function AdminBooking() {
             trainersData && trainersData!.length > 0 ? (
               trainersData.map((trainer: TrainerType) => {
                 return (
-                  <div key={trainer.username} className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]">
+                  <div
+                    key={trainer.username}
+                    className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]"
+                  >
                     <span className="flex w-full justify-between">
                       <div>
-                        <h2 className="text-xl font-bold">{trainer.username}</h2>
+                        <h2 className="text-xl font-bold">
+                          {trainer.username}
+                        </h2>
                       </div>
                     </span>
 
@@ -144,7 +150,9 @@ export default function AdminBooking() {
                                 colorScheme="green"
                               >
                                 <Flex alignItems="center" gap="2">
-                                  <Badge colorScheme={getColorByDay(slot.day)}>{slot.day.substring(0, 3)}</Badge>
+                                  <Badge colorScheme={getColorByDay(slot.day)}>
+                                    {slot.day.substring(0, 3)}
+                                  </Badge>
                                   <Code>{slot.starting_time}</Code>
                                 </Flex>
                               </Button>
@@ -159,10 +167,13 @@ export default function AdminBooking() {
               <div>No trainers available</div>
             )
           ) : (
-            <div>Fetching Data...</div>
+            <Spinner />
           )
         ) : (
-          <div>Create or manage classes here. To create a new class, please query by a day first!</div>
+          <div>
+            Create or manage classes here. To create a new class, please query
+            by a day first!
+          </div>
         )}
       </div>
     </div>
