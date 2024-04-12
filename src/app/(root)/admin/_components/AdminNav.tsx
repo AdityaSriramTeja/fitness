@@ -10,7 +10,8 @@ interface Route {
 
 const routes: Route[] = [
   { path: "/admin", label: "Dashboard" },
-  { path: "/admin/booking", label: "Booking" },
+  { path: "/admin/classes", label: "Classes" },
+  { path: "/admin/classes", label: "Rooms" },
   { path: "/admin/transactions", label: "Transactions" },
   { path: "/admin/profile", label: "Profile" },
 ];

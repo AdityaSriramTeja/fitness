@@ -1,23 +1,9 @@
-import {
-  CheckboxGroup,
-  Stack,
-  Checkbox,
-  Button,
-  Select,
-} from "@chakra-ui/react";
+import { CheckboxGroup, Stack, Checkbox, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-export const AdminBookingDates = ({ setDays }: { setDays: any }) => {
+export default function AdminBookingDates({ setDays }: { setDays: any }) {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const handleCheckboxChange = (value: string) => {
@@ -42,11 +28,7 @@ export const AdminBookingDates = ({ setDays }: { setDays: any }) => {
       <CheckboxGroup colorScheme="green">
         <Stack spacing={[1, 5]} direction={["column", "row"]}>
           {days.map((day) => (
-            <Checkbox
-              key={day}
-              value={day}
-              onChange={(e) => handleCheckboxChange(e.target.value)}
-            >
+            <Checkbox key={day} value={day} onChange={(e) => handleCheckboxChange(e.target.value)}>
               {day}
             </Checkbox>
           ))}
@@ -58,4 +40,4 @@ export const AdminBookingDates = ({ setDays }: { setDays: any }) => {
       </Button>
     </div>
   );
-};
+}

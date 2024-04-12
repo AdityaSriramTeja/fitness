@@ -34,6 +34,7 @@ CREATE TABLE Class(
   trainer_username TEXT,
   FOREIGN KEY (room_id) REFERENCES Room(id),
   FOREIGN KEY (trainer_username) REFERENCES Trainer(username)
+  -- query if a class has members: SELECT * FROM Member WHERE enrolled_class_id = `classid`;
 );
 
 CREATE TABLE Member(
