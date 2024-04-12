@@ -16,7 +16,7 @@ export default function PublicProfile({
       <div className="px-20 py-10 space-y-10">
         <section className="flex items-center w-full gap-x-5">
           <div className="w-20 h-20 bg-black rounded-xl" />{" "}
-          <h1 className="font-bold text-xl flex-1"> {params.username} </h1>
+          <h1 className="font-bold text-xl flex-1"> @{params.username} </h1>
         </section>
         <hr />
         <section className="flex flex-wrap w-full gap-10 justify-evenly">
