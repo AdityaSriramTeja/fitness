@@ -9,6 +9,11 @@ export type MemberType = {
   enrolled_class_id: number;
 };
 
+export async function userExists(tableName: string, username: string, password: string): Promise<boolean> {
+  const user = await db.execute(sql`select * from ${sql.raw(tableName)} where username = ${username} and password = ${password}`);
+  return user.length > 0;
+}
+
 export async function getMember(): Promise<MemberType[]> {
   const member = await db.execute(sql`select * from Member`);
   return member as unknown as MemberType[];
@@ -19,20 +24,11 @@ export async function addMember(username: string, password: string, name: string
 }
 
 export async function getMemberByName(name: string): Promise<MemberType[]> {
-  const member = await db.execute(
-    sql`select username, name from Member where name = ${name}`
-  );
+  const member = await db.execute(sql`select username, name from Member where name = ${name}`);
   return member as unknown as MemberType[];
 }
 
-export async function getMemberProfileByUsername(
-  username: string
-): Promise<MemberType[]> {
-  const member = await db.execute(
-    sql`select username, name from Member where name = ${username}`
-  );
+export async function getMemberProfileByUsername(username: string): Promise<MemberType[]> {
+  const member = await db.execute(sql`select username, name from Member where name = ${username}`);
   return member as unknown as MemberType[];
 }
-
-
-

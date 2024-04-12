@@ -16,7 +16,7 @@ export default function Navbar({ routes }: { routes: Route[] }) {
   const { signOut } = useAuth();
 
   useEffect(() => {
-    if (username === null || username === undefined) {
+    if (username === null) {
       window.location.href = "/";
     }
   }, [username]);
