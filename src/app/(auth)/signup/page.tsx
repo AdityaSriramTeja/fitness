@@ -21,11 +21,12 @@ export default function SignUp() {
 
     if (!res.ok) {
       alert("Failed to create user (is username unique?)");
-      return;
+      return true;
     }
 
     window.localStorage.setItem("user", newUser.username);
     window.location.href = `/${newUser.userType}`;
+    return false; // never reached
   }
 
   return <AuthUI title="Sign Up" isSignIn={false} handleSubmit={handleSubmit} />;

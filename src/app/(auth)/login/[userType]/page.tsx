@@ -21,11 +21,12 @@ export default function SignIn({ params }: { params: { userType: string } }) {
 
     if (!res.ok) {
       alert("Failed to sign in");
-      return;
+      return true;
     }
 
     window.localStorage.setItem("username", user.username);
     window.location.href = `/${params.userType}`;
+    return false; // never reached
   }
 
   return <AuthUI isSignIn={true} title={`${capitalizeFirstChar} Sign In`} handleSubmit={handleSubmit} />;

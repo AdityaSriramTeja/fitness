@@ -29,7 +29,11 @@ export async function addMember(username: string, password: string, name: string
 }
 
 export async function getMemberByName(name: string): Promise<MemberCard[]> {
-  const member = await db.execute(sql`select username, name from member where LOWER(name) like ${sql.raw(`'%${name}%'`)}`);
+  const member = await db.execute(
+    sql`select username, name from member where LOWER(name) like ${sql.raw(
+      `LOWER('%${name}%')`
+    )}`
+  );
   return member as unknown as MemberCard[];
 }
 
