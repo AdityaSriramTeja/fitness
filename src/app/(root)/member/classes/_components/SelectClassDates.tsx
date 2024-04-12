@@ -1,7 +1,7 @@
 import { ClassType } from "@/db/class";
 import { CheckboxGroup, Stack, Checkbox, Button, Select, SimpleGrid, Box, Heading, Text } from "@chakra-ui/react";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -25,13 +25,16 @@ export default function SelectClassDates({ setClasses }: PropType) {
 
   async function handleQueryClick() {
     try {
+      if (selectedValues.length === 0) {
+        setClasses([]);
+        return;
+      }
       const response = await fetch(`/class/byDays`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ days: selectedValues }),
       });
       const data = await response.json();
-      // console.log("data", data)
       setClasses(data);
     } catch (error) {
       console.error("Error fetching classes:", error);
@@ -50,13 +53,6 @@ export default function SelectClassDates({ setClasses }: PropType) {
             ))}
           </Stack>
         </CheckboxGroup>
-        <div className="w-[30%]">
-          <Select placeholder="Select option">
-            <option value="pushups">Push ups</option>
-            <option value="situps">Sit ups</option>
-            <option value="punches">Punches</option>
-          </Select>
-        </div>
         <Button colorScheme="blue" onClick={handleQueryClick}>
           Query
         </Button>
