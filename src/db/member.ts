@@ -14,9 +14,9 @@ export async function userExists(tableName: string, username: string, password: 
   return user.length > 0;
 }
 
-export async function getMember(): Promise<MemberType[]> {
-  const member = await db.execute(sql`select * from Member`);
-  return member as unknown as MemberType[];
+export async function getMembers(): Promise<MemberType[]> {
+  const members = await db.execute(sql`select * from Member`);
+  return members as unknown as MemberType[];
 }
 
 export async function addMember(username: string, password: string, name: string): Promise<void> {
@@ -25,6 +25,11 @@ export async function addMember(username: string, password: string, name: string
 
 export async function getMemberByName(name: string): Promise<MemberType[]> {
   const member = await db.execute(sql`select username, name from Member where name = ${name}`);
+  return member as unknown as MemberType[];
+}
+
+export async function getMemberByUsername(username: string): Promise<MemberType[]> {
+  const member = await db.execute(sql`select username, name from Member where username = ${username}`);
   return member as unknown as MemberType[];
 }
 

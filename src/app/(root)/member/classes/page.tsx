@@ -4,7 +4,7 @@ import { SimpleGrid, Box, Heading, Text, Button } from "@chakra-ui/react";
 
 import SelectClassDates from "./_components/SelectClassDates";
 import { ClassType } from "@/db/class";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useUsername } from "@/hooks/auth";
 import { useQuery } from "@tanstack/react-query";
 
