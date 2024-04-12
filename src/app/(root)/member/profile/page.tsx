@@ -2,14 +2,16 @@
 
 import { MemberType } from "@/db/member";
 import { ClassType } from "@/db/class";
+import { FitnessGoalType } from "@/db/fitnessGoal";
 import { useUsername } from "@/hooks/auth";
 import React, { useEffect, useState } from "react";
-import { Spinner } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 
 export default function ProfilePage() {
   const username = useUsername();
   const [fees, setFees] = useState<number>();
   const [curClasses, setCurClasses] = useState<ClassType[]>();
+  const [fitnessGoals, setFitnessGoals] = useState<FitnessGoalType[]>();
 
   useEffect(() => {
     if (username) {
@@ -21,7 +23,6 @@ export default function ProfilePage() {
     if (!username) return [];
     const response = await fetch(`/api/member?username=${username}`);
     const data = await response.json() as MemberType[];
-    console.log(data[0]);
     if (data.length === 0) return [];
     setFees(data[0].outstanding_balance);
 
@@ -31,9 +32,32 @@ export default function ProfilePage() {
     }
     const classResponse = await fetch(`/class/byId?id=${data[0].enrolled_class_id}`);
     const classData = await classResponse.json() as ClassType[];
-    console.log(classData[0]);
     setCurClasses(classData);
+
+    const fitnessGoalResponse = await fetch(`/fitnessGoal`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username }),
+    });
+    const fitnessGoalData = await fitnessGoalResponse.json() as FitnessGoalType[];
+    console.log(fitnessGoalData);
+    setFitnessGoals(fitnessGoalData);
     return data;
+  }
+
+  async function deleteFitnessGoal() {
+    // const response = await fetch(`/fitnessGoal`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ id: 1 }),
+    // });
+    // const data = await response.json();
+    // console.log(data);
   }
 
   return (
@@ -59,16 +83,29 @@ export default function ProfilePage() {
             ${fees !== undefined ? `${fees}` : <Spinner />}
           </h4>
         </div>
-        <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3">
-          <div>
-            <h3 className="capitalize font-semibold"> Fitness goals:</h3>
-            <br/>
-            <div className="flex flex-col bg-gray-100 rounded-lg shadow-md p-4 mb-4 gap-y-2">
-              <h3 className=" text-lg font-medium text-gray-800">{"Six Pack"}</h3>
-              <p className="text-gray-600 mb-2">{"Losing 20kg weight"}</p>
-              <span className="text-sm text-gray-400">{"June 2024"}</span>
+        <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative min-h-[250px]">
+        {fitnessGoals !== undefined ? (
+          fitnessGoals.length !== 0 ? (
+            <div>
+              <h3 className="capitalize font-semibold"> Fitness Goals:</h3>
+              <br/>
+              {/* display in a consistent format all the fitness goals */}
+              {fitnessGoals.map((goal) => (
+                <div className="flex flex-col bg-gray-100 rounded-lg shadow-md p-4 mb-4 gap-y-2">
+                  <h3 className=" text-lg font-medium text-gray-800">{goal.name}</h3>
+                  <p className="text-gray-600 mb-2">{goal.description}</p>
+                  <span className="text-sm text-gray-400">{goal.date}</span>
+                  <Button onClick={deleteFitnessGoal}>Delete Fitness Goal</Button>
+                </div>
+              ))}
             </div>
-          </div>
+            ) : (
+            <h3 className="capitalize font-semibold ">No Fitness Goals.</h3>
+            )
+          ) : (
+          <h3 className="capitalize font-semibold "><Spinner /></h3>
+          )
+        }
         </div>
         <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative min-h-[250px]">
         {curClasses !== undefined ? (

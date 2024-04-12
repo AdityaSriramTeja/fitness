@@ -23,3 +23,22 @@ export async function getFitnessGoalByMember(
   );
   return fitnessGoal as unknown as FitnessGoalType[];
 }
+
+export async function addFitnessGoalByUsername(
+  username: string,
+  name: string,
+  description: string,
+  date: string
+): Promise<void> {
+  await db.execute(
+    sql`insert into Fitness_Goal (username, name, description, date) values (${username}, ${name}, ${description}, ${date})`
+  );
+}
+
+export async function deleteFitnessGoalById(
+  id: number
+): Promise<void> {
+  await db.execute(
+    sql`delete from Fitness_Goal where id = ${id}`
+  );
+}
