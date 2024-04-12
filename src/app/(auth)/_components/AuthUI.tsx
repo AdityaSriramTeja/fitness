@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import AuthBtn from "./AuthBtn";
-import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
-import RedirectButton from "@/components/shared/RedirectBtn";
+import { Button, Flex, Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function AuthUI({ title, isSignIn }: { title: string; isSignIn: boolean }) {
   const [userType, setUserType] = useState("member");
@@ -33,8 +33,14 @@ export default function AuthUI({ title, isSignIn }: { title: string; isSignIn: b
       <div className="flex flex-col items-center w-full gap-y-6">
         <AuthBtn isSignIn={isSignIn} />
         <hr className="w-full" />
-        <span> {isSignIn ? "New user?" : "Already a user?"} </span>
-        {isSignIn ? <RedirectButton route="/signup">Sign up</RedirectButton> : <RedirectButton route="/">Sign In</RedirectButton>}
+        <Flex gap="2">
+          {isSignIn ? "New user?" : "Already a user?"}{" "}
+          <Link href={isSignIn ? "/signup" : "/"}>
+            <Button as="a" variant="link" colorScheme="blue">
+              Click here to {isSignIn ? "sign up" : "log in"} instead!
+            </Button>
+          </Link>
+        </Flex>
       </div>
     </div>
   );

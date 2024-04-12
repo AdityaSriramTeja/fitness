@@ -4,7 +4,6 @@ import { useAuth, useUsername } from "@/hooks/auth";
 import RedirectButton from "./RedirectBtn";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
-import { useEffect } from "react";
 
 type Route = {
   path: string;
