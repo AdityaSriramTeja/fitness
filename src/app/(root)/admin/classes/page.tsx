@@ -1,13 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminBookingDates from "./_components/AdminBookingDates";
-import { DetailChips } from "@/components/shared/detailChips";
 import { useQuery } from "@tanstack/react-query";
 import { TrainerAvailabilityType } from "@/db/trainerAvailability";
 import NewClassModal from "./_components/NewClassModal";
-import { Button } from "@chakra-ui/react";
+import { Badge, Button, Code, Flex } from "@chakra-ui/react";
 import { RoomType } from "@/db/room";
+import { TrainerType } from "@/db/trainer";
+import { getColorByDay } from "@/lib/utils";
+
+async function fetchRooms(start_time: string | undefined): Promise<RoomType[]> {
+  if (!start_time) {
+    return [];
+  }
+  const response = await fetch(`/roomAvailable?start_time=${start_time}`);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Error rooms`);
+  }
+
+  return data as RoomType[];
+}
 
 async function fetchTrainerSlots(days: string[]) {
   if (days.length === 0) {
@@ -27,6 +42,17 @@ async function fetchTrainerSlots(days: string[]) {
     results.push(...data);
   }
   return results;
+}
+
+async function fetchTrainers() {
+  const response = await fetch(`/api/trainer`);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Error fetching trainers`);
+  }
+
+  return data;
 }
 
 export default function AdminBooking() {
@@ -52,24 +78,26 @@ export default function AdminBooking() {
     queryFn: () => fetchTrainerSlots(filterDays),
   });
 
-  async function fetchRooms(start_time: string | undefined): Promise<RoomType[]> {
-    if (!start_time) {
-      return [];
-    }
-    const response = await fetch(`/roomAvailable?start_time=${start_time}`);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(`Error rooms`);
-    }
-
-    return data as RoomType[];
-  }
+  const {
+    data: trainersData,
+    isLoading: trainersIsLoading,
+    refetch: refetchTrainers,
+  } = useQuery({
+    queryKey: ["getAllTrainers"],
+    queryFn: fetchTrainers,
+  });
 
   const onOpen = (slot: TrainerAvailabilityType) => {
     setSelectedSlot(slot);
     setIsOpen(true);
   };
+
+  const isLoading = slotIsLoading || trainersIsLoading;
+
+  useEffect(() => {
+    refetchTrainerSlots();
+    refetchTrainers();
+  }, [filterDays]);
 
   return (
     <div className="flex flex-col gap-y-10">
@@ -88,16 +116,15 @@ export default function AdminBooking() {
       <hr />
       <div className="flex flex-wrap gap-6">
         {filterDays.length > 0 ? (
-          !slotIsLoading ? (
-            slotData && slotData!.length > 0 ? (
-              slotData.map((slot: TrainerAvailabilityType) => {
+          !isLoading ? (
+            trainersData && trainersData!.length > 0 ? (
+              trainersData.map((trainer: TrainerType) => {
                 return (
-                  <div key={slot.id} className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]">
+                  <div key={trainer.username} className="border-2 rounded-lg p-5 flex flex-col gap-y-5 w-[230px]">
                     <span className="flex w-full justify-between">
                       <div>
-                        <h2 className="text-xl font-bold">{slot.trainer_username}</h2>
+                        <h2 className="text-xl font-bold">{trainer.username}</h2>
                       </div>
-                      <DetailChips label={slot.day.substring(0, 3)} />
                     </span>
 
                     <hr />
@@ -105,22 +132,34 @@ export default function AdminBooking() {
                     <div className="flex flex-col items-center gap-y-4">
                       <label className="font-semibold underline">Slots</label>
 
-                      <Button
-                        onClick={() => {
-                          onOpen(slot);
-                        }}
-                      >
-                        {slot.starting_time}
-                      </Button>
+                      {slotData &&
+                        slotData.map((slot: TrainerAvailabilityType) => {
+                          if (slot.trainer_username === trainer.username) {
+                            return (
+                              <Button
+                                key={slot.id}
+                                onClick={() => {
+                                  onOpen(slot);
+                                }}
+                                colorScheme="green"
+                              >
+                                <Flex alignItems="center" gap="2">
+                                  <Badge colorScheme={getColorByDay(slot.day)}>{slot.day.substring(0, 3)}</Badge>
+                                  <Code>{slot.starting_time}</Code>
+                                </Flex>
+                              </Button>
+                            );
+                          }
+                        })}
                     </div>
                   </div>
                 );
               })
             ) : (
-              <div> No slots available</div>
+              <div>No trainers available</div>
             )
           ) : (
-            <div> Fetching Data </div>
+            <div>Fetching Data...</div>
           )
         ) : (
           <div>Create or manage classes here. To create a new class, please query by a day first!</div>
