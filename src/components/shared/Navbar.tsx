@@ -15,11 +15,11 @@ export default function Navbar({ routes }: { routes: Route[] }) {
   const username = useUsername();
   const { signOut } = useAuth();
 
-  // useEffect(() => {
-  //   if (!username) {
-  //     window.location.href = "/";
-  //   }
-  // }, [username]);
+  useEffect(() => {
+    if (username === null || username === undefined) {
+      window.location.href = "/";
+    }
+  }, [username]);
 
   return (
     <header className=" border-b-[1px] px-5 p-5 flex items-center justify-between">
