@@ -34,7 +34,7 @@ export async function getMemberByName(name: string): Promise<MemberCard[]> {
 }
 
 export async function getMemberByUsername(username: string): Promise<MemberType[]> {
-  const member = await db.execute(sql`select username, name from Member where username = ${username}`);
+  const member = await db.execute(sql`select * from Member where username = ${username}`);
   return member as unknown as MemberType[];
 }
 

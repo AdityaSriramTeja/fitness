@@ -1,12 +1,13 @@
 "use client";
 
-import { SimpleGrid, Box, Heading, Text, Button } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Heading, Text, Button, Code } from "@chakra-ui/react";
 
 import SelectClassDates from "./_components/SelectClassDates";
 import { ClassType } from "@/db/class";
 import React, { useState } from "react";
 import { useUsername } from "@/hooks/auth";
 import { useQuery } from "@tanstack/react-query";
+import { MemberType } from "@/db/member";
 
 export default function Classes() {
   const username = useUsername();
@@ -24,6 +25,8 @@ export default function Classes() {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    refetch();
   }
 
   async function unEnroll() {
@@ -37,63 +40,65 @@ export default function Classes() {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    refetch();
   }
 
-  async function fetchEnrollmentStatus() {
-    if (!username) return false;
+  async function fetchEnrolledClassID(): Promise<number | null> {
+    if (!username) return -1;
 
-    const response = await fetch(`/class/isEnrolled`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username }),
-    });
-    const data = await response.json();
-    return data;
+    const response = await fetch(`/api/member?username=${username}`);
+    const data = (await response.json()) as MemberType[];
+
+    if (data.length === 0) return -1;
+
+    return data[0].enrolled_class_id;
   }
 
-  const { data: enrolled, refetch } = useQuery({
-    queryKey: ["isEnrolled", username],
-    queryFn: () => fetchEnrollmentStatus(),
+  const { data: enrolledClassID, refetch } = useQuery({
+    queryKey: ["getEnrolledClassID", username],
+    queryFn: fetchEnrolledClassID,
   });
+
+  const isEnrolled = enrolledClassID !== -1 && enrolledClassID !== null;
 
   return (
     <div className="h-full p-10 flex flex-col">
       <section className="w-full ">
         <SelectClassDates setClasses={setClasses} />
-        {!!enrolled && (
-          <div>
-            <div className="flex flex-col items-center">
-              <Button
-                onClick={() => {
-                  unEnroll();
-                }}
-              >
-                Unenroll From Class
-              </Button>
-            </div>
-            <br />
-          </div>
-        )}
+
         <SimpleGrid columns={4} spacing={10}>
           {classes.map((classData) => (
-            <Box key={classData.id} p={5} shadow="md" borderWidth="1px">
+            <Flex key={classData.id} p={5} shadow="md" borderWidth="1px" gap="5" flexDir="column">
               <Heading fontSize="xl">{classData.name}</Heading>
-              <Text mt={4}>ID: {classData.id}</Text>
-              <Text mt={4}>Group Class: {classData.is_group_class ? "Yes" : "No"}</Text>
-              <Text mt={4}>Room ID: {classData.room_id}</Text>
-              <Text mt={4}>Day: {classData.day}</Text>
-              <Text mt={4}>Starting Time: {classData.starting_time}</Text>
-              <Text mt={4}>Trainer Username: {classData.trainer_username}</Text>
+              <Text>ID: {classData.id}</Text>
+              <Text>Group Class: {classData.is_group_class ? "Yes" : "No"}</Text>
+              <Text>Room ID: {classData.room_id}</Text>
+              <Text>Day: {classData.day}</Text>
+              <Text>Starting Time: {classData.starting_time}</Text>
+              <Code w="fit-content" alignSelf="center">
+                @{classData.trainer_username}
+              </Code>
               <div className="flex flex-col items-center">
-                <Button
-                  onClick={() => {
-                    enrollInClass({ classData });
-                  }}
-                >
-                  Enroll In Class
-                </Button>
+                {isEnrolled ? (
+                  enrolledClassID === classData.id && (
+                    <Button onClick={unEnroll} colorScheme="red">
+                      Unenroll
+                    </Button>
+                  )
+                ) : (
+                  <Button
+                    onClick={() => {
+                      enrollInClass({ classData });
+                    }}
+                    colorScheme="blue"
+                    rounded="full"
+                  >
+                    Enroll
+                  </Button>
+                )}
               </div>
-            </Box>
+            </Flex>
           ))}
         </SimpleGrid>
       </section>
