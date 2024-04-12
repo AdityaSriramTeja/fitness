@@ -5,7 +5,7 @@ import { Heading, Button, Flex, Radio, RadioGroup, Stack, FormControl, FormLabel
 import Link from "next/link";
 import { NewUserType } from "../signup/page";
 
-type PropType = { title: string; isSignIn: boolean; handleSubmit: (newUser: NewUserType) => void };
+type PropType = { title: string; isSignIn: boolean; handleSubmit: (newUser: NewUserType) => boolean };
 
 export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
   const [loading, setLoading] = useState(false);
@@ -21,8 +21,8 @@ export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        await handleSubmit({ userType, username, password, name });
-        setLoading(false);
+        const didFail = await handleSubmit({ userType, username, password, name });
+        if (didFail) setLoading(false);
       }}
     >
       <Heading size="md">{title}</Heading>
