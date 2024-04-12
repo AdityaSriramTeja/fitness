@@ -60,11 +60,12 @@ export default function NewClassModal({ refetch, setIsOpen, isOpen, selectedSlot
     });
 
     refetch();
+    setIsOpen(false);
   }
 
-  const onClose = () => {
+  function onClose() {
     setIsOpen(false);
-  };
+  }
 
   const handleNameChange = (e: any) => {
     setCreateClass((prevState) => ({
@@ -105,7 +106,7 @@ export default function NewClassModal({ refetch, setIsOpen, isOpen, selectedSlot
         <ModalBody>
           {selectedSlot && (
             <Stack direction={"column"} spacing={6}>
-              <Input placeholder="Classs Name" size="md" onChange={handleNameChange} />
+              <Input placeholder="Class Name" size="md" onChange={handleNameChange} />
               <RadioGroup defaultValue="group_class" onChange={handleGroupChange}>
                 <Stack spacing={4} direction="row">
                   <Radio value="group_class">Group</Radio>

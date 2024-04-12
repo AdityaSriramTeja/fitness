@@ -37,13 +37,17 @@ export default function AdminBooking() {
   const {
     data: roomsData,
     isLoading: roomsIsLoading,
-    refetch,
+    refetch: refetchRooms,
   } = useQuery({
     queryKey: ["getAllRooms", selectedSlot?.starting_time ?? ""],
     queryFn: () => fetchRooms(selectedSlot?.starting_time ?? ""),
   });
 
-  const { data: slotData, isLoading: slotIsLoading } = useQuery({
+  const {
+    data: slotData,
+    isLoading: slotIsLoading,
+    refetch: refetchTrainerSlots,
+  } = useQuery({
     queryKey: ["getTrainerAvailabilities", filterDays],
     queryFn: () => fetchTrainerSlots(filterDays),
   });
@@ -69,7 +73,17 @@ export default function AdminBooking() {
 
   return (
     <div className="flex flex-col gap-y-10">
-      <NewClassModal refetch={refetch} setIsOpen={setIsOpen} isOpen={isOpen} selectedSlot={selectedSlot} roomsData={roomsData} roomsIsLoading={roomsIsLoading} />
+      <NewClassModal
+        refetch={() => {
+          refetchRooms();
+          refetchTrainerSlots();
+        }}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        selectedSlot={selectedSlot}
+        roomsData={roomsData}
+        roomsIsLoading={roomsIsLoading}
+      />
       <AdminBookingDates setDays={setFilterDays} />
       <hr />
       <div className="flex flex-wrap gap-6">
