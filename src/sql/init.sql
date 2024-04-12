@@ -21,6 +21,7 @@ CREATE TABLE Trainer_Availability(
 CREATE TABLE Room(
   id SERIAL PRIMARY KEY,
   name TEXT UNIQUE NOT NULL
+  -- room availability query: SELECT * FROM Room WHERE id NOT IN (SELECT room_id FROM Class WHERE day = 'Monday' AND starting_time = '09:00:00');
 );
 
 CREATE TABLE Class(
