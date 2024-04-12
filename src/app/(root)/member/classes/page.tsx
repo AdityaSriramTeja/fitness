@@ -6,11 +6,12 @@ import SelectClassDates from "./_components/SelectClassDates";
 import { ClassType } from "@/db/class";
 import React, { useEffect, useState } from "react";
 import { useUsername } from "@/hooks/auth";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Classes() {
   const username = useUsername();
   const [classes, setClasses] = useState<ClassType[]>([]);
-  const [enrolled, setEnrolled] = useState<boolean>(false);
+  // const [enrolled, setEnrolled] = useState<boolean>(false);
 
   async function enrollInClass( { classData }: { classData: ClassType }) {
     try {
@@ -38,27 +39,29 @@ export default function Classes() {
     }
   }
 
-  useEffect(() => {
-    try {
-      fetch(`/class/isEnrolled`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(username),
-      })
-      .then((response) => response.json())
-      .then((data) =>
-        setEnrolled(data)
-      );
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }, []);
+  async function fetchEnrollmentStatus() {
+    const response = await fetch(`/class/isEnrolled`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: username }),
+    });
+    const data = await response.json();
+    return data;
+  };
+
+  const {
+    data: enrolled,
+    refetch: refetch,
+  } = useQuery({
+    queryKey: ["isEnrolled", username],
+    queryFn: () => fetchEnrollmentStatus(),
+  });
 
   return (
     <div className="h-full p-10 flex flex-col">
       <section className="w-full ">
         <SelectClassDates setClasses={setClasses} />
-        {enrolled === true &&
+        {!!enrolled &&
           <div>
             <div className="flex flex-col items-center">
               <Button
