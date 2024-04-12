@@ -1,6 +1,7 @@
 "use client";
 
 import { AchievementType } from "@/db/achievements";
+import { Spinner } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 
@@ -21,7 +22,7 @@ export const MemberAchievements = ({ username }: { username: string }) => {
   });
 
   if (isLoading) {
-    return <div> Loading </div>;
+    return <Spinner />;
   }
 
   return (

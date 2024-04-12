@@ -1,5 +1,6 @@
 "use client";
 import { FitnessGoalType } from "@/db/fitnessGoal";
+import { Spinner } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -19,7 +20,7 @@ export const MemberFitnessGoal = ({ username }: { username: string }) => {
     queryFn: () => getData(username),
   });
   if (isLoading) {
-    return <div> Loading </div>;
+    return <Spinner />;
   }
   return (
     <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3">

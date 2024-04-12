@@ -1,12 +1,14 @@
+"use client";
 import { MemberAchievements } from "@/components/memberAchievements";
 import { MemberRoutine } from "@/components/memberRoutines";
+import { useUsername } from "@/hooks/auth";
 import React from "react";
 
 const Member = () => {
-  const username = "member2";
+  const username = useUsername();
   return (
     <div className="p-10 h-full space-y-10 ">
-      <h1 className="text-2xl font-bold underline"> Welcome member </h1>
+      <h1 className="text-2xl font-bold underline"> Welcome @{username} </h1>
       <h3 className="text-lg font-semibold"> Dashboard </h3>
       <div className="h-[100vh] max-h-[300vh] grid   grid-cols-2 gap-4">
         <div className="border-2 rounded-xl p-5 space-y-10 ">
