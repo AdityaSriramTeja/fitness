@@ -8,5 +8,5 @@ export async function POST(req: Request) {
     });
   }
   const res = await isEnrolled(body.username);
-  return new Response(res.toString());
+  return new Response(JSON.stringify(res));
 }
