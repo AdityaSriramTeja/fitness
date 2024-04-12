@@ -5,6 +5,7 @@ import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { RoomBookingType } from "@/db/room";
+import stc from "string-to-color";
 
 export default function Rooms() {
   async function fetchBookings() {
@@ -44,7 +45,7 @@ export default function Rooms() {
               <Tr key={booking.room_id}>
                 <Td>{booking.room_name}</Td>
                 <Td>
-                  <Code colorScheme="blue">@{booking.trainer_username}</Code>
+                  <Code color={stc(booking.trainer_username)}>@{booking.trainer_username}</Code>
                 </Td>
                 <Td>{booking.class_name}</Td>
                 <Td>{booking.day}</Td>
