@@ -1,7 +1,7 @@
 "use client";
 import { FitnessGoalType } from "@/db/fitnessGoal";
 import { Button, Spinner } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 async function getData(username: string): Promise<FitnessGoalType[]> {
@@ -26,19 +26,34 @@ async function deleteFitnessGoal(goal: FitnessGoalType) {
 }
 
 export const MemberFitnessGoal = ({ username }: { username: string }) => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["userFitnessGoal", username],
     queryFn: () => getData(username),
   });
 
-  const queryClient = useQueryClient();
+  async function handleNew() {
+    const name = prompt("Enter goal name");
+    const description = prompt("Enter goal description");
+    const date = prompt("Enter goal date (YYYY-MM-DD)");
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => getData(username),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userFitnessGoal"] });
-    },
-  });
+    if (!name || !description || !date) {
+      return;
+    }
+
+    const res = await fetch("/fitnessGoal", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, name, description, date }),
+    });
+
+    if (!res.ok) {
+      alert("Error adding goal");
+    }
+
+    refetch();
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -58,7 +73,7 @@ export const MemberFitnessGoal = ({ username }: { username: string }) => {
               variant="outline"
               onClick={() => {
                 deleteFitnessGoal(goal);
-                mutate();
+                refetch();
               }}
             >
               Delete Fitness Goal
@@ -68,6 +83,9 @@ export const MemberFitnessGoal = ({ username }: { username: string }) => {
       ) : (
         <div> Member didn&apos;t set any fitness goals </div>
       )}
+      <Button colorScheme="blue" onClick={handleNew}>
+        New Goal
+      </Button>
     </div>
   );
 };
