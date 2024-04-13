@@ -101,4 +101,4 @@ CREATE TABLE Transactions(
   amount INT NOT NULL,
   date DATE NOT NULL,
   FOREIGN KEY (username) REFERENCES Member (username)
-)
+);
