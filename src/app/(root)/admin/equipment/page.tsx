@@ -5,6 +5,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Checkbox
 import { Heading, Spinner } from "@chakra-ui/react";
 import { ParsedEquipmentType } from "@/db/equipment";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import NewEquipmentRow from "./_components/NewEquipmentRow";
 
 export default function Equipment() {
   async function fetchEquipment() {
@@ -55,7 +56,7 @@ export default function Equipment() {
             <Tr>
               <Th>Name</Th>
               <Th>Room</Th>
-              <Th>Maintenance</Th>
+              <Th>Needs Maintenance</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -64,10 +65,11 @@ export default function Equipment() {
                 <Td>{equipment.name}</Td>
                 <Td>{equipment.room_name}</Td>
                 <Td>
-                  <Checkbox disabled={isPending} isChecked={!equipment.needs_maintenance} onChange={() => mutate({ id: equipment.id, needs_maintenance: !equipment.needs_maintenance })} />
+                  <Checkbox disabled={isPending} isChecked={equipment.needs_maintenance} onChange={() => mutate({ id: equipment.id, needs_maintenance: !equipment.needs_maintenance })} />
                 </Td>
               </Tr>
             ))}
+            <NewEquipmentRow refetch={refetch} />
           </Tbody>
         </Table>
       </TableContainer>

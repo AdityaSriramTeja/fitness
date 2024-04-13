@@ -38,3 +38,11 @@ export async function updateEquipmentMaintenance(id: number, needs_maintenance: 
     `
   );
 }
+
+export async function addEquipment(name: string, room: number, needs_maintenance: boolean): Promise<void> {
+  await db.execute(
+    sql`insert into Equipment (name, room_id, needs_maintenance)
+    values (${name}, ${room}, ${needs_maintenance})
+    `
+  );
+}
