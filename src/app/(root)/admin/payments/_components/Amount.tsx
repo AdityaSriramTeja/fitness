@@ -1,6 +1,6 @@
 "use client";
 
-import { Code } from "@chakra-ui/react";
+import { Kbd } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -22,7 +22,7 @@ export default function Amount({ username }: { username: string }) {
   });
 
   if (data && data.length > 0) {
-    return <Code size="lg">{data[0].sum}</Code>;
+    return <Kbd fontSize="medium">${data[0].sum}.00</Kbd>;
   }
 
   return "–";
