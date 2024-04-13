@@ -3,6 +3,7 @@
 import { MemberType } from "@/db/member";
 import { ClassType } from "@/db/class";
 import { FitnessGoalType } from "@/db/fitnessGoal";
+import { MemberFitnessGoal } from "@/components/shared/member/fitnessGoal";
 import { useUsername } from "@/hooks/auth";
 import React, { useEffect, useState } from "react";
 import { Button, Spinner } from "@chakra-ui/react";
@@ -17,7 +18,7 @@ export default function ProfilePage() {
     if (username) {
       fetchMemberData();
     }
-  }, [username]);
+  }, [username || fitnessGoals]);
 
   async function fetchMemberData(): Promise<MemberType[]> {
     if (!username) return [];
@@ -40,24 +41,11 @@ export default function ProfilePage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: username }),
+      body: JSON.stringify({ username }),
     });
     const fitnessGoalData = await fitnessGoalResponse.json() as FitnessGoalType[];
-    console.log(fitnessGoalData);
     setFitnessGoals(fitnessGoalData);
     return data;
-  }
-
-  async function deleteFitnessGoal() {
-    // const response = await fetch(`/fitnessGoal`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ id: 1 }),
-    // });
-    // const data = await response.json();
-    // console.log(data);
   }
 
   return (
@@ -83,30 +71,11 @@ export default function ProfilePage() {
             ${fees !== undefined ? `${fees}` : <Spinner />}
           </h4>
         </div>
-        <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative min-h-[250px]">
-        {fitnessGoals !== undefined ? (
-          fitnessGoals.length !== 0 ? (
-            <div>
-              <h3 className="capitalize font-semibold"> Fitness Goals:</h3>
-              <br/>
-              {/* display in a consistent format all the fitness goals */}
-              {fitnessGoals.map((goal) => (
-                <div className="flex flex-col bg-gray-100 rounded-lg shadow-md p-4 mb-4 gap-y-2">
-                  <h3 className=" text-lg font-medium text-gray-800">{goal.name}</h3>
-                  <p className="text-gray-600 mb-2">{goal.description}</p>
-                  <span className="text-sm text-gray-400">{goal.date}</span>
-                  <Button onClick={deleteFitnessGoal}>Delete Fitness Goal</Button>
-                </div>
-              ))}
-            </div>
-            ) : (
-            <h3 className="capitalize font-semibold ">No Fitness Goals.</h3>
-            )
-          ) : (
-          <h3 className="capitalize font-semibold "><Spinner /></h3>
-          )
-        }
-        </div>
+        {username ? (
+          <MemberFitnessGoal username={username} />
+        ) : (
+          <Spinner />
+        )}
         <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative min-h-[250px]">
         {curClasses !== undefined ? (
           curClasses.length !== 0 ? (

@@ -5,6 +5,7 @@ import MemberClassEnrolled from "@/components/shared/member/classEnrolled";
 import { MemberFitnessGoal } from "@/components/shared/member/fitnessGoal";
 import { routes } from "../../trainer/layout";
 
+// NEVER USED?
 export default function PublicProfile({
   params,
 }: {
