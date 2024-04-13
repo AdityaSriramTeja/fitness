@@ -8,7 +8,6 @@ import { Spinner } from "@chakra-ui/react";
 
 const Member = () => {
   const username = useUsername();
-  // const [members, setMembers] = useState<MemberType[]>();
 
   return (
     <div className="p-10 h-full space-y-10 ">
