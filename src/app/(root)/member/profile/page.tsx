@@ -71,7 +71,7 @@ export default function ProfilePage() {
       </section>
       <section className="flex flex-wrap w-full gap-10">
         <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative">
-          <h3 className="capitalize font-semibold ">Outstanding Membership fee:</h3>
+          <h3 className="capitalize font-semibold ">Total Payments:</h3>
           <h4 className="md:text-6xl font-bold text-3xl flex-1 ">${fees !== undefined ? `${fees}` : <Spinner />}</h4>
           <Button w="full" colorScheme="yellow" onClick={newTransaction}>
             Deposit Fee
