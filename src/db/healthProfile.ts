@@ -15,3 +15,8 @@ export async function getHealthProfile(): Promise<HealthProfileType[]> {
   const healthProfile = await db.execute(sql`select * from HealthProfile`);
   return healthProfile as unknown as HealthProfileType[];
 }
+
+export async function getHealthProfileByMember(username: string): Promise<HealthProfileType[]> {
+  const healthProfile = await db.execute(sql`select * from Fitness_Goal where username = ${username}`);
+  return healthProfile as unknown as HealthProfileType[];
+}

@@ -14,7 +14,6 @@ export async function getFitnessGoal(): Promise<FitnessGoalType[]> {
   return fitnessGoal as unknown as FitnessGoalType[];
 }
 
-
 export async function getFitnessGoalByMember(
   username: string
 ): Promise<FitnessGoalType[]> {

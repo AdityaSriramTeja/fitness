@@ -5,8 +5,8 @@ import { ClassType } from "@/db/class";
 import { FitnessGoalType } from "@/db/fitnessGoal";
 import { MemberFitnessGoal } from "@/components/shared/member/fitnessGoal";
 import { useUsername } from "@/hooks/auth";
-import React, { useEffect, useState } from "react";
 import { Button, Spinner } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const username = useUsername();

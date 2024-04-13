@@ -20,6 +20,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+
 async function getData(username: string): Promise<ExerciseRoutineLogType[]> {
   const response = await fetch(
     `/exerciseRoutineLogByUsername?username=${username}`
@@ -31,6 +32,7 @@ async function getData(username: string): Promise<ExerciseRoutineLogType[]> {
   }
   return data;
 }
+
 async function addRoutine(
   name: string,
   date: string,
@@ -53,6 +55,7 @@ async function addRoutine(
   setRun_Reps("");
   onClose();
 }
+
 export const MemberRoutine = ({ username }: { username: string }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data, isLoading } = useQuery({
