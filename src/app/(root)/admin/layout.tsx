@@ -5,7 +5,7 @@ const routes = [
   { path: "/admin", label: "Dashboard" },
   { path: "/admin/classes", label: "Classes" },
   { path: "/admin/classes", label: "Rooms" },
-  { path: "/admin/transactions", label: "Transactions" },
+  { path: "/admin/payments", label: "Payments " },
   { path: "/admin/profile", label: "Profile" },
 ];
 

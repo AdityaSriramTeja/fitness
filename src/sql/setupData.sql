@@ -62,3 +62,7 @@ INSERT INTO Exercise_Routine_Log (name, date, num_reps, username) VALUES
 INSERT INTO Fitness_Goal (name, description, date, username) VALUES
   ('Goal 1', 'Description 1', '2021-01-01', 'member1'),
   ('Goal 2', 'Description 2', '2021-01-01', 'member2');
+
+
+INSERT INTO Transactions (name, username, amount, date) VALUES
+  ('Membership Free', 'member1', 20, '2021-01-01');
