@@ -5,7 +5,7 @@ import { Heading, Button, Flex, Radio, RadioGroup, Stack, FormControl, FormLabel
 import Link from "next/link";
 import { NewUserType } from "../signup/page";
 
-type PropType = { title: string; isSignIn: boolean; handleSubmit: (newUser: NewUserType) => boolean };
+type PropType = { title: string; isSignIn: boolean; handleSubmit: (newUser: NewUserType) => Promise<boolean> };
 
 export default function AuthUI({ title, isSignIn, handleSubmit }: PropType) {
   const [loading, setLoading] = useState(false);

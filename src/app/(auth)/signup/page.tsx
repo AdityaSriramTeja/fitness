@@ -24,7 +24,7 @@ export default function SignUp() {
       return true;
     }
 
-    window.localStorage.setItem("user", newUser.username);
+    window.localStorage.setItem("username", newUser.username);
     window.location.href = `/${newUser.userType}`;
     return false; // never reached
   }
