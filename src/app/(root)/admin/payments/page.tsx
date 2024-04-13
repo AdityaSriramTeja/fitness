@@ -1,36 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-  Button,
-  useDisclosure,
-  Spinner,
-} from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, useDisclosure, Spinner } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { TransactionType } from "@/db/transactions";
 import { MemberType } from "@/db/member";
+import Amount from "./_components/Amount";
 
-async function getData(
-  username: string,
-  onOpen: () => void
-): Promise<TransactionType[]> {
+async function getData(username: string, onOpen: () => void): Promise<TransactionType[]> {
   if (username === "") return [] as TransactionType[];
 
   const response = await fetch(`/memberTransactions?username=${username}`);
@@ -83,7 +60,6 @@ export default function PaymentsList() {
         <ModalContent>
           <ModalHeader>
             <h1 className="capitalized">
-              {" "}
               {selectedUser.charAt(0).toUpperCase() + selectedUser.slice(1)}
               &apos;s Transactions
             </h1>
@@ -94,17 +70,11 @@ export default function PaymentsList() {
               <Spinner />
             ) : data && data.length > 0 ? (
               data.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="w-full flex flex-col gap-y-4 border-2 p-5 rounded-lg shadow-sm font-semibold text-lg capitalize"
-                >
+                <div key={transaction.id} className="w-full flex flex-col gap-y-4 border-2 p-5 rounded-lg shadow-sm font-semibold text-lg capitalize">
                   <label> Name : {transaction.name}</label>
                   <label> username : {transaction.username}</label>
                   <label> amount: {transaction.amount}</label>
-                  <label className="opacity-50">
-                    {" "}
-                    date : {transaction.date}
-                  </label>
+                  <label className="opacity-50"> date : {transaction.date}</label>
                 </div>
               ))
             ) : (
@@ -121,7 +91,6 @@ export default function PaymentsList() {
       </Modal>
       {memberListLoading ? (
         <span className="flex items-center gap-x-5">
-          {" "}
           Fetching user list <Spinner />
         </span>
       ) : (
@@ -140,7 +109,9 @@ export default function PaymentsList() {
                 {memberList.map((val) => (
                   <Tr key={val.username}>
                     <Td>{val.username}</Td>
-                    <Td>{val.outstanding_balance}</Td>
+                    <Td>
+                      <Amount username={val.username} />
+                    </Td>
                     <Td isNumeric>
                       <Button
                         colorScheme={"blue"}
@@ -148,7 +119,7 @@ export default function PaymentsList() {
                           setSelectedUser(val.username);
                         }}
                       >
-                        View Transactions{" "}
+                        View Transactions
                       </Button>
                     </Td>
                   </Tr>
