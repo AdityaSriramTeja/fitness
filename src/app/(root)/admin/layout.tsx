@@ -2,11 +2,10 @@ import React from "react";
 import Navbar from "@/components/shared/Navbar";
 
 const routes = [
-  { path: "/admin", label: "Dashboard" },
   { path: "/admin/classes", label: "Classes" },
-  { path: "/admin/classes", label: "Rooms" },
-  { path: "/admin/payments", label: "Payments " },
-  { path: "/admin/profile", label: "Profile" },
+  { path: "/admin/rooms", label: "Rooms" },
+  { path: "/admin/equipment", label: "Equipment" },
+  { path: "/admin/payments", label: "Payments" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

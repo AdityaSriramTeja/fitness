@@ -28,7 +28,6 @@ export async function POST(req: NextRequest) {
   const date = body.date;
   const num_reps = body.num_reps;
   const username = body.username;
-  console.log(body);
   await addExerciseRoutineLogByUsername(name, date, num_reps, username);
 
   return new Response("Routine created", {

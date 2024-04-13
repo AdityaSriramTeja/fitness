@@ -12,19 +12,14 @@ import { MemberType } from "@/db/member";
 export default function Classes() {
   const username = useUsername();
   const [classes, setClasses] = useState<ClassType[]>([]);
-  // const [enrolled, setEnrolled] = useState<boolean>(false);
 
   async function enrollInClass({ classData }: { classData: ClassType }) {
-    try {
-      const enrolled_class_id = classData.id;
-      const response = await fetch(`/class/bookClass`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, enrolled_class_id: enrolled_class_id }),
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const enrolled_class_id = classData.id;
+    const response = await fetch(`/class/bookClass`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, enrolled_class_id: enrolled_class_id }),
+    });
 
     refetch();
   }

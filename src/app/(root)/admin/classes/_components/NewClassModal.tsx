@@ -128,12 +128,12 @@ export default function NewClassModal({ refetch, setIsOpen, isOpen, selectedSlot
             </Stack>
           )}
         </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
+        <ModalFooter display="flex" justifyContent="space-between">
+          <Button colorScheme="red" mr={3} onClick={onClose} variant="ghost">
+            Cancel
           </Button>
           <Button colorScheme="green" onClick={() => createClassAndBookRoom(createClass, selectedSlot!)}>
-            Book
+            Create Class
           </Button>
         </ModalFooter>
       </ModalContent>
