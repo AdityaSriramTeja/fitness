@@ -92,3 +92,13 @@ CREATE TABLE Fitness_Goal(
   username TEXT,
   FOREIGN KEY (username) REFERENCES Member(username)
 );
+
+
+CREATE TABLE Transactions(
+  id SERIAL PRIMARY KEY,
+  name TEXT DEFAULT 'Membership Fee',
+  username TEXT NOT NULL,
+  amount INT NOT NULL,
+  date DATE NOT NULL,
+  FOREIGN KEY (username) REFERENCES Member (username)
+)

@@ -5,7 +5,7 @@ const routes = [
   { path: "/admin/classes", label: "Classes" },
   { path: "/admin/rooms", label: "Rooms" },
   { path: "/admin/equipment", label: "Equipment" },
-  { path: "/admin/transactions", label: "Transactions" },
+  { path: "/admin/payments", label: "Payments" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
