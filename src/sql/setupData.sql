@@ -32,11 +32,11 @@ INSERT INTO Class (name, is_group_class, room_id, day, starting_time, trainer_us
   ('Some Random Class', FALSE, (SELECT id FROM Room WHERE name = 'Carleton Gym'), 'Tuesday', '13:00:00', 'carson_marson');
 
 INSERT INTO Member (username, password, name, outstanding_balance, enrolled_class_id) VALUES
-  ('member1', 'member1', 'Akuchi', 0, 1),
-  ('onyxin', 'onyxin', 'Onyx', 0, 2),
-  ('cyanuts', 'cyanuts', 'Cyan', 0, 3),
-  ('someuser', 'someuser', 'Olayinka', 0, 4),
-  ('oracle', 'oracle', 'Ora', 0, NULL);
+  ('member1', 'member1', 'Akuchi', 100, 1),
+  ('onyxin', 'onyxin', 'Onyx', 20, 2),
+  ('cyanuts', 'cyanuts', 'Cyan', 50, 3),
+  ('someuser', 'someuser', 'Olayinka', 20, 4),
+  ('oracle', 'oracle', 'Ora', 30, NULL);
 
 INSERT INTO Achievements_Log (name, description, date, username) VALUES
   ('Arms of Steel', 'Bench Pressed 225lb', '2021-02-03', 'member1'),
