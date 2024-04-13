@@ -68,7 +68,6 @@ export default function ProfilePage() {
       <section className="flex items-center w-full gap-x-5">
         <div className="w-20 h-20 bg-black rounded-xl" />
         <h1 className="font-bold text-xl flex-1"> Username </h1>
-        <button className="p-2 rounded-lg border-2 hover:bg-slate-400/40 shadow-md">Settings</button>
       </section>
       <section className="flex flex-wrap w-full gap-10">
         <div className="w-[30%] rounded-lg border-[1px] p-5 flex flex-col gap-y-3 relative">
