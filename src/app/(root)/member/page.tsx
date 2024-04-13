@@ -5,8 +5,6 @@ import { MemberAchievements } from "@/components/memberAchievements";
 import { MemberRoutine } from "@/components/memberRoutines";
 import { useUsername } from "@/hooks/auth";
 import { Spinner } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { MemberType } from "@/db/member";
 
 const Member = () => {
   const username = useUsername();
