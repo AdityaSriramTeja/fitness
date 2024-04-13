@@ -3,7 +3,6 @@ import Navbar from "@/components/shared/Navbar";
 const routes = [
   { path: "/member", label: "Dashboard" },
   { path: "/member/classes", label: "Classes" },
-  { path: "/member/routines", label: "Routines" },
   { path: "/member/profile", label: "Profile" },
 ];
 

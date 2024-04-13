@@ -10,7 +10,6 @@ const RoutinesPage = () => {
       </aside> */}
 
       <section className="border-b-[1px] py-5 flex ">
-        {" "}
         <QueryRoutine />
       </section>
       <section className="h-full flex flex-wrap overflow-y-auto">

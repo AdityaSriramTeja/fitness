@@ -30,9 +30,9 @@ export const MemberFitnessGoal = ({ username }: { username: string }) => {
     queryKey: ["userFitnessGoal", username],
     queryFn: () => getData(username),
   });
-  
+
   const queryClient = useQueryClient();
-  
+
   const { mutate, isPending } = useMutation({
     mutationFn: () => getData(username),
     onSuccess: () => {
@@ -49,18 +49,20 @@ export const MemberFitnessGoal = ({ username }: { username: string }) => {
       <h3 className="capitalize font-semibold"> Fitness goals:</h3>
       {data && data.length > 0 ? (
         data.map((goal) => (
-          <div
-            key={goal.id}
-            className="flex flex-col bg-gray-100 rounded-lg shadow-md p-4 mb-4 gap-y-2"
-          >
+          <div key={goal.id} className="flex flex-col bg-gray-100 rounded-lg shadow-md p-4 mb-4 gap-y-2">
             <h3 className=" text-lg font-medium text-gray-800">{goal.name}</h3>
             <p className="text-gray-600 mb-2">{goal.description}</p>
             <span className="text-sm text-gray-400">{goal.date}</span>
-            <Button onClick={() => {
-              deleteFitnessGoal(goal);
-              mutate();
-              }}>Delete Fitness Goal
-            </Button>    
+            <Button
+              colorScheme="red"
+              variant="outline"
+              onClick={() => {
+                deleteFitnessGoal(goal);
+                mutate();
+              }}
+            >
+              Delete Fitness Goal
+            </Button>
           </div>
         ))
       ) : (
