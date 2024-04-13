@@ -42,7 +42,7 @@ export default function Rooms() {
           </Thead>
           <Tbody>
             {data?.map((booking) => (
-              <Tr key={booking.room_id}>
+              <Tr key={`${booking.trainer_username}-${booking.day}-${booking.time}`}>
                 <Td>{booking.room_name}</Td>
                 <Td>
                   <Code color={stc(booking.trainer_username)}>@{booking.trainer_username}</Code>
