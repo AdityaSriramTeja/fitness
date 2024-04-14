@@ -33,21 +33,21 @@ INSERT INTO Class (name, is_group_class, room_id, day, starting_time, trainer_us
 
 INSERT INTO Member (username, password, name, outstanding_balance, enrolled_class_id) VALUES
   ('member1', 'member1', 'Akuchi', 100, 1),
-  ('onyxin', 'onyxin', 'Onyx', 20, 2),
-  ('cyanuts', 'cyanuts', 'Cyan', 50, 3),
-  ('someuser', 'someuser', 'Olayinka', 20, 4),
-  ('oracle', 'oracle', 'Ora', 30, NULL);
+  ('johnathan', 'johnathan', 'Onyx', 20, 2),
+  ('jonas', 'jonas', 'Cyan', 50, 3),
+  ('johnny', 'johnny', 'Olayinka', 20, 4),
+  ('john', 'john', 'Ora', 30, NULL);
 
 INSERT INTO Achievements_Log (name, description, date, username) VALUES
   ('Arms of Steel', 'Bench Pressed 225lb', '2021-02-03', 'member1'),
-  ('Legs of Iron', 'Did a 10k run', '2024-05-06', 'onyxin');
+  ('Legs of Iron', 'Did a 10k run', '2024-05-06', 'johnathan');
 
 INSERT INTO Health_Profile (weight, average_sleep, average_calories_burnt, gender, age, username) VALUES
   (110, 1, 1100, 'M', 21, 'member1'),
-  (120, 2, 1200, 'F', 22, 'onyxin'),
-  (130, 3, 1300, 'M', 23, 'cyanuts'),
-  (140, 4, 1400, 'F', 24, 'someuser'),
-  (150, 5, 1500, 'M', 25, 'oracle');
+  (120, 2, 1200, 'F', 22, 'johnathan'),
+  (130, 3, 1300, 'M', 23, 'jonas'),
+  (140, 4, 1400, 'F', 24, 'johnny'),
+  (150, 5, 1500, 'M', 25, 'john');
 
 INSERT INTO Equipment (name, needs_maintenance, room_id) VALUES
   ('Dumbbells', FALSE, (SELECT id FROM Room WHERE name = 'Algonquin Gym')),
@@ -56,11 +56,11 @@ INSERT INTO Equipment (name, needs_maintenance, room_id) VALUES
 
 INSERT INTO Exercise_Routine_Log (name, date, num_reps, username) VALUES
   ('Benchpressing', '2021-02-03', 10, 'member1'),
-  ('Jumping In The Air', '2024-05-06', 20, 'onyxin');
+  ('Jumping In The Air', '2024-05-06', 20, 'johnathan');
 
 INSERT INTO Fitness_Goal (name, description, date, username) VALUES
   ('Have a 6-pack', 'This will require doing many sit-ups.', '2021-02-03', 'member1'),
-  ('Can jump more then 2.5 meters high', 'This will require lots of leg strength.', '2024-05-06', 'onyxin');
+  ('Can jump more then 2.5 meters high', 'This will require lots of leg strength.', '2024-05-06', 'johnathan');
 
 INSERT INTO Transactions (name, username, amount, date) VALUES
   ('Membership Fee', 'member1', 20, '2021-02-03');

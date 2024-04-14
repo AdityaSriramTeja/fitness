@@ -79,12 +79,22 @@ export async function isEnrolled(username: string): Promise<Boolean> {
   return true;
 }
 
-
-export async function getClassByUsername(
-  username: string
-): Promise<ClassType[]> {
-  const classFitness = await db.execute(
-    sql`select c.id, c.name, c.is_group_class, c.room_id, c.day, c.starting_time, c.trainer_username from class c inner join member m on c.id = m.enrolled_class_id where m.username = ${username}`
-  );
+export async function getClassByUsername(username: string): Promise<ClassType[]> {
+  const classFitness = await db.execute(sql`select c.id, c.name, c.is_group_class, c.room_id, c.day, c.starting_time, c.trainer_username from class c inner join member m on c.id = m.enrolled_class_id where m.username = ${username}`);
   return classFitness as unknown as ClassType[];
+}
+
+export async function deleteClass(class_id: number): Promise<void> {
+  // de-register all users from this class
+  await db.execute(
+    sql`UPDATE Member
+    SET enrolled_class_id = NULL
+    WHERE enrolled_class_id = ${class_id}`
+  );
+
+  // delete the class (this will also remove the room booking automatically)
+  await db.execute(
+    sql`DELETE FROM Class
+    WHERE id = ${class_id}`
+  );
 }
