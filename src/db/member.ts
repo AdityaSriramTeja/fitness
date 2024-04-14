@@ -42,3 +42,12 @@ export async function getMemberProfileByUsername(username: string): Promise<Memb
   const member = await db.execute(sql`select username, name from Member where name = ${username}`);
   return member as unknown as MemberType[];
 }
+
+export async function updateMemberName(
+  username: string,
+  name: string
+): Promise<void> {
+  await db.execute(
+    sql`update Member set name = ${name} where username = ${username}`
+  );
+}
