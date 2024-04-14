@@ -7,6 +7,10 @@ Clone the GitHub repository to your local machine using the following command:
 
 Navigate into the project directory using the `cd` command: `cd fitness`
 
+## Create the database
+
+Using pgAdmin, create a database, ours is named ```fitness```
+
 ## Set up ```.env.local```
 
 Create a copy of ```.env.local.example``` named ```.env.local```
