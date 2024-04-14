@@ -100,7 +100,7 @@ export default function PaymentsList() {
               <Thead>
                 <Tr>
                   <Th>Username</Th>
-                  <Th>Outstanding Balance</Th>
+                  <Th>Total Payments</Th>
                   <Th isNumeric> View Transactions </Th>
                 </Tr>
               </Thead>

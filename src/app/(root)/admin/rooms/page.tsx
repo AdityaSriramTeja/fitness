@@ -3,7 +3,7 @@
 import { Button, Code, Heading, Spinner } from "@chakra-ui/react";
 import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { RoomBookingType } from "@/db/room";
 import stc from "string-to-color";
 
@@ -19,9 +19,25 @@ export default function Rooms() {
     return data;
   }
 
-  const { data, isLoading } = useQuery<RoomBookingType[]>({
+  async function deleteClass({ class_id }: { class_id: number }) {
+    const res = window.confirm("Are you sure you want to cancel this booking? Doing so will de-register all users from this class.");
+    if (!res) return;
+
+    await fetch(`/api/bookings`, {
+      method: "DELETE",
+      body: JSON.stringify({ class_id }),
+    });
+
+    refetch();
+  }
+
+  const { data, isLoading, refetch } = useQuery<RoomBookingType[]>({
     queryKey: ["getRoomBookings"],
     queryFn: fetchBookings,
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteClass,
   });
 
   return (
@@ -51,7 +67,7 @@ export default function Rooms() {
                 <Td>{booking.day}</Td>
                 <Td>{booking.time}</Td>
                 <Td>
-                  <Button size="sm" colorScheme="red" isDisabled>
+                  <Button isLoading={isPending} loadingText="Loading..." size="sm" colorScheme="red" onClick={() => mutate({ class_id: booking.class_id })}>
                     Cancel
                   </Button>
                 </Td>

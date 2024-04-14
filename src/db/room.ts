@@ -7,6 +7,7 @@ export type RoomType = {
 };
 
 export type RoomBookingType = {
+  class_id: number;
   room_id: number;
   room_name: string;
   trainer_username: string;
@@ -34,11 +35,12 @@ export async function getAvailableRooms(start_time: string): Promise<RoomType[]>
 
 export async function getRoomBookings() {
   const bookings = await db.execute(
-    sql`SELECT Class.room_id, Room.name as room_name, Class.trainer_username as trainer_username, Class.name as class_name, Class.day, Class.starting_time as time
+    sql`SELECT Class.id as class_id, Class.room_id, Room.name as room_name, Class.trainer_username as trainer_username, Class.name as class_name, Class.day, Class.starting_time as time
     FROM Class
     JOIN Room ON Class.room_id = Room.id
     WHERE Class.room_id IS NOT NULL
     ORDER BY room_id, trainer_username, day, time;`
   );
+
   return bookings as unknown as RoomBookingType[];
 }
