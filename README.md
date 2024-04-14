@@ -1,17 +1,31 @@
-## Step 1: Clone the Repository
+## Clone the Repository
 
 Clone the GitHub repository to your local machine using the following command:
 `git clone https://github.com/AdityaSriramTeja/fitness.git`
 
-## Step 2: Navigate to the Project Directory
+## Navigate to the Project Directory
 
 Navigate into the project directory using the `cd` command: `cd fitness`
 
-## Step 3: Install Dependencies
+## Set up ```.env.local```
+
+Create a copy of ```.env.local.example``` named ```.env.local```
+
+Fill in the 5 fields of the file, for example:
+
+```
+PG_USERNAME=postgres
+PG_PASSWORD=postgres
+PG_URL=127.0.0.1
+PG_PORT=5432
+PG_DB=fitness
+```
+
+## Install Dependencies
 
 Install the project dependencies using npm: `npm install`
 
-## Step 4: Start the Development Server
+## Start the Development Server
 
 Start the Next.js development server using the following command: `npm run dev`
 
