@@ -37,4 +37,6 @@ The development server will start, and your Next.js application will be accessib
 
 ## The DDL, DML, ER Diagram and Relational Schema files are found in the sql directory in root
 
+[VIDEO](https://youtu.be/kRWql9wfKlQ)
+
 [GENERAL REPORT](https://docs.google.com/document/d/1cOtS9KjjumOrKlYP0c_vBwFqMQnBVLeq3WdrlG3lBU8/edit?usp=sharing)
