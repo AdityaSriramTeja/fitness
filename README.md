@@ -35,6 +35,6 @@ Start the Next.js development server using the following command: `npm run dev`
 
 The development server will start, and your Next.js application will be accessible at `http://localhost:3000` by default.
 
-## The DDL, DML, ER and Relational Schema files are found in the sql directory in root
+## The DDL, DML, ER Diagram and Relational Schema files are found in the sql directory in root
 
 [GENERAL REPORT](https://docs.google.com/document/d/1cOtS9KjjumOrKlYP0c_vBwFqMQnBVLeq3WdrlG3lBU8/edit?usp=sharing)
